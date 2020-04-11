@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { FormGroup, Row, Col } from 'react-bootstrap';
 import Input from '../Input/Input';
+import TextArea from '../TextArea/TextArea';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export class Patient extends Component {
@@ -36,9 +37,9 @@ export class Patient extends Component {
                 type='text'
                 value={this.state.patientName}
                 label='Patient Name'
-                placeholderText='Patient Name'
+                placeholderText="Enter Patient's Name"
                 onChange={this.onChange}
-                onBlue={this.onBlur}
+                onBlur={this.onBlur}
               />
             </Col>
             <Col md={1} />
@@ -48,9 +49,9 @@ export class Patient extends Component {
                 type='text'
                 value={this.state.patientSpecies}
                 label="Patient's Species"
-                placeholderText="Patient's Species"
+                placeholderText="Enter Patient's Species"
                 onChange={this.onChange}
-                onBlue={this.onBlur}
+                onBlur={this.onBlur}
               />
             </Col>
             <Col md={1} />
@@ -63,9 +64,9 @@ export class Patient extends Component {
                 type='text'
                 value={this.state.patientGender}
                 label="Patient's Gender"
-                placeholderText="Patient's Gender"
+                placeholderText="Enter Patient's Gender"
                 onChange={this.onChange}
-                onBlue={this.onBlur}
+                onBlur={this.onBlur}
               />
             </Col>
             <Col md={1} />
@@ -75,21 +76,24 @@ export class Patient extends Component {
                 type='text'
                 value={this.state.patientBirthDate}
                 label="Patient's Birth Date"
-                placeholderText="Patient's Birth Date"
+                placeholderText="Enter Patient's Birth Date"
                 onChange={this.onChange}
-                onBlue={this.onBlur}
+                onBlur={this.onBlur}
               />
             </Col>
             <Col md={1} />
           </Row>
           <Row>
             <Col md={1} />
-            <Col md={1} />
             <Col className='field-area'>
-              <label>{'Patient Notes'}</label>
-              <textarea
+              <TextArea
+                name='patientNotes'
+                type='text'
                 value={this.state.patientNotes}
+                label='Patient Notes'
+                placeholderText="Enter Patient's Notes"
                 onChange={this.onChange}
+                onBlur={this.onBlur}
               />
             </Col>
             <Col md={1} />

@@ -41,9 +41,9 @@ export class Owner extends Component {
                   type='text'
                   value={owner.ownerFirstName}
                   label="Owner's First Name"
-                  placeholderText="Owner's First Name"
+                  placeholderText="Enter Owner's First Name"
                   onChange={this.onChange}
-                  onBlue={this.onBlur}
+                  onBlur={this.onBlur}
                 />
               </Col>
               <Col md={1} />
@@ -53,9 +53,9 @@ export class Owner extends Component {
                   type='text'
                   value={owner.ownerLastName}
                   label="Owner's Last Name"
-                  placeholderText="Owner's Last Name"
+                  placeholderText="Enter Owner's Last Name"
                   onChange={this.onChange}
-                  onBlue={this.onBlur}
+                  onBlur={this.onBlur}
                 />
               </Col>
               <Col md={1} />
@@ -68,9 +68,9 @@ export class Owner extends Component {
                   type='text'
                   value={owner.ownerAddress}
                   label="Owner's Address"
-                  placeholderText="Owner's Address"
+                  placeholderText="Enter Owner's Address"
                   onChange={this.onChange}
-                  onBlue={this.onBlur}
+                  onBlur={this.onBlur}
                 />
               </Col>
               <Col md={1} />
@@ -83,9 +83,9 @@ export class Owner extends Component {
                   type='text'
                   value={owner.ownerCity}
                   label="Owner's City"
-                  placeholderText="Owner's City"
+                  placeholderText="Enter Owner's City"
                   onChange={this.onChange}
-                  onBlue={this.onBlur}
+                  onBlur={this.onBlur}
                 />
               </Col>
               <Col md={1} />
@@ -95,9 +95,9 @@ export class Owner extends Component {
                   type='number'
                   value={owner.ownerZip}
                   label="Owner's Zip"
-                  placeholderText="Owner's Zip"
+                  placeholderText="Enter Owner's Zip"
                   onChange={this.onChange}
-                  onBlue={this.onBlur}
+                  onBlur={this.onBlur}
                 />
               </Col>
               <Col md={1} />
