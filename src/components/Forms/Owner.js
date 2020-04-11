@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { FormGroup, Row, Col } from 'react-bootstrap';
 import Input from '../Input/Input';
+import Patient from './Patient';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export class Owner extends Component {
@@ -14,7 +15,7 @@ export class Owner extends Component {
   }
 
   async fetchOwners() {
-    let response = await fetch('https://localhost:44368/api/v1/owner');
+    let response = await fetch('https://localhost:44368/api/v1/owners');
     let data = await response.json();
     return data;
   }
@@ -29,9 +30,9 @@ export class Owner extends Component {
 
   render() {
     return (
-      <div className='App'>
+      <div className='App' style={{ backgroundColor: '#DCDCDC' }}>
         {this.state.owners.map((owner, i) => (
-          <FormGroup>
+          <FormGroup key={owner.ownerId}>
             <Row>
               <Col md={1} />
               <Col className='field-area'>
@@ -101,6 +102,10 @@ export class Owner extends Component {
               </Col>
               <Col md={1} />
             </Row>
+            {owner.ownerPets &&
+              owner.ownerPets.map((patient, i) => (
+                <Patient key={patient.patientId} patient={patient} />
+              ))}
             <hr className='line' />
           </FormGroup>
         ))}
