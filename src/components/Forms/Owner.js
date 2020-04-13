@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { FormGroup, Row, Col } from 'react-bootstrap';
+import { FormGroup, Row, Col, Container } from 'react-bootstrap';
 import Input from '../Input/Input';
 import Patient from './Patient';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 export class Owner extends Component {
   constructor(props) {
@@ -30,7 +29,7 @@ export class Owner extends Component {
 
   render() {
     return (
-      <div className='App' style={{ backgroundColor: '#DCDCDC' }}>
+      <Container style={{ backgroundColor: '#DCDCDC' }}>
         {this.state.owners.map((owner, i) => (
           <FormGroup key={owner.ownerId}>
             <Row>
@@ -109,7 +108,7 @@ export class Owner extends Component {
             <hr className='line' />
           </FormGroup>
         ))}
-      </div>
+      </Container>
     );
   }
 }
