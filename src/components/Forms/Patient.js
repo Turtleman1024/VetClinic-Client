@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { FormGroup, Row, Col, FormLabel } from 'react-bootstrap';
 import Input from '../Input/Input';
 import TextArea from '../TextArea/TextArea';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.css';
 
 export class Patient extends Component {
   constructor(props) {
