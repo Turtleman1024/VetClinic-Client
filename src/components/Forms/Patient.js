@@ -9,6 +9,7 @@ export class Patient extends Component {
     super(props);
     this.state = {
       patientId: this.props.patient.patientId,
+      ownerId: this.props.patient.ownerId,
       patientName: this.props.patient.patientName,
       patientSpecies: this.props.patient.patientSpecies,
       patientGender: this.props.patient.patientGender,
@@ -52,6 +53,7 @@ export class Patient extends Component {
                   name='isActive'
                   checked={this.state.isActive}
                   onChange={this.toggleCheckbox}
+                  disabled={this.props.readOnly}
                 />
                 <label>{'Yes'}</label>
               </Col>
@@ -62,6 +64,7 @@ export class Patient extends Component {
                   name='isActive'
                   checked={!this.state.isActive}
                   onChange={this.toggleCheckbox}
+                  disabled={this.props.readOnly}
                 />
                 <label>{'No'}</label>
               </Col>
@@ -80,8 +83,8 @@ export class Patient extends Component {
                   onBlur={this.onBlur}
                 />
               </Col>
-              <Col md={1} />
-              <Col className='field-area'>
+              <Col md={3} />
+              <Col>
                 <Input
                   name='patientSpecies'
                   type='text'
@@ -92,7 +95,6 @@ export class Patient extends Component {
                   onBlur={this.onBlur}
                 />
               </Col>
-              <Col md={1} />
             </Row>
             <Row>
               <Col md={1} />
@@ -107,8 +109,8 @@ export class Patient extends Component {
                   onBlur={this.onBlur}
                 />
               </Col>
-              <Col md={1} />
-              <Col className='field-area'>
+              <Col md={3} />
+              <Col>
                 <Input
                   name='patientBirthDate'
                   type='text'
@@ -119,7 +121,6 @@ export class Patient extends Component {
                   onBlur={this.onBlur}
                 />
               </Col>
-              <Col md={1} />
             </Row>
             <Row>
               <Col md={1} />
@@ -134,7 +135,6 @@ export class Patient extends Component {
                   onBlur={this.onBlur}
                 />
               </Col>
-              <Col md={1} />
             </Row>
           </Col>
           <Col md={1} />
