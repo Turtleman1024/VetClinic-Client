@@ -33,7 +33,7 @@ export class Patient extends Component {
 
   render() {
     return (
-      <div className='App' style={{ backgroundColor: '#f0f8ff' }}>
+      <div className='App' style={{ backgroundColor: '#74b9ff' }}>
         <FormGroup key={this.state.patientId}>
           <Col md={1} />
           <Col md={10}>

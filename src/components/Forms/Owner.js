@@ -27,7 +27,7 @@ export class Owner extends Component {
 
   render() {
     return (
-      <Container style={{ backgroundColor: '#DCDCDC' }}>
+      <Container style={{ backgroundColor: '#3498db' }}>
         <FormGroup key={this.state.ownerId}>
           <Row>
             <Col md={1} />
