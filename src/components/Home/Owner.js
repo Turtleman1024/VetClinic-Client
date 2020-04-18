@@ -3,6 +3,7 @@ import OwnerForm from '../Forms/Owner';
 import Container from 'react-bootstrap/Container';
 import { connect } from 'react-redux';
 import { fetchOwners } from '../../actions/owners';
+import NavBar from '../NavBar/NavBar';
 
 export class Owner extends Component {
   componentDidMount() {
@@ -11,11 +12,14 @@ export class Owner extends Component {
 
   render() {
     return (
-      <Container className='p-3 my-3 border'>
-        {this.props.owners.map((owner) => (
-          <OwnerForm key={owner.ownerId} owner={owner} />
-        ))}
-      </Container>
+      <div>
+        <NavBar />
+        <Container className='p-3 my-3 border'>
+          {this.props.owners.map((owner) => (
+            <OwnerForm key={owner.ownerId} owner={owner} />
+          ))}
+        </Container>
+      </div>
     );
   }
 }

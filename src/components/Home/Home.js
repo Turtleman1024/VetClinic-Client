@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import Header from '../Header/Header';
-import Container from 'react-bootstrap/Container';
+import NavBar from '../NavBar/NavBar';
 
 export class Home extends Component {
   state = {};
   render() {
     return (
-      <Container className='p-3'>
-        <Header />
+      <div>
+        <NavBar />
         <h1>Welcome to Home Page</h1>
-      </Container>
+      </div>
     );
   }
 }

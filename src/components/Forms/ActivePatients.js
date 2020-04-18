@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Container from 'react-bootstrap/Container';
 import { connect } from 'react-redux';
 import Patient from '../Forms/Patient';
+import NavBar from '../NavBar/NavBar';
 import { fetchActivePatients } from '../../actions/patients';
 
 export class ActivePatients extends Component {
@@ -19,11 +20,18 @@ export class ActivePatients extends Component {
 
   render() {
     return (
-      <Container style={{ backgroundColor: '#f0f8ff' }}>
-        {this.props.patients.map((patient) => (
-          <Patient key={patient.patientId} patient={patient} readOnly={false} />
-        ))}
-      </Container>
+      <div>
+        <NavBar />
+        <Container style={{ backgroundColor: '#f0f8ff' }}>
+          {this.props.patients.map((patient) => (
+            <Patient
+              key={patient.patientId}
+              patient={patient}
+              readOnly={false}
+            />
+          ))}
+        </Container>
+      </div>
     );
   }
 }
