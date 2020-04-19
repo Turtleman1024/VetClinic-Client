@@ -114,7 +114,9 @@ export class Patient extends Component {
                 <Input
                   name='patientBirthDate'
                   type='text'
-                  value={this.state.patientBirthDate}
+                  value={new Date(
+                    this.state.patientBirthDate
+                  ).toLocaleDateString('en-US')}
                   label="Patient's Birth Date"
                   placeholderText="Enter Patient's Birth Date"
                   onChange={this.onChange}
