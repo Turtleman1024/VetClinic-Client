@@ -27,7 +27,10 @@ export class Owner extends Component {
 
   render() {
     return (
-      <Container style={{ backgroundColor: '#3498db' }}>
+      <Container
+        className='p-3 my-3 border'
+        style={{ backgroundColor: '#3498db' }}
+      >
         <FormGroup key={this.state.ownerId}>
           <Row>
             <Col md={1} />
@@ -103,10 +106,9 @@ export class Owner extends Component {
               <Patient
                 key={patient.patientId}
                 patient={patient}
-                readOnly={true}
+                readOnly={false}
               />
             ))}
-          <hr className='line' />
         </FormGroup>
       </Container>
     );

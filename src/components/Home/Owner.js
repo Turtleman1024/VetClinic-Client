@@ -4,6 +4,7 @@ import Container from 'react-bootstrap/Container';
 import { connect } from 'react-redux';
 import { fetchOwners } from '../../actions/owners';
 import NavBar from '../NavBar/NavBar';
+import PropTypes from 'prop-types';
 
 export class Owner extends Component {
   componentDidMount() {
@@ -24,10 +25,15 @@ export class Owner extends Component {
   }
 }
 
-const maptStateToProps = (state) => {
+Owner.propTypes = {
+  fetchOwners: PropTypes.func.isRequired,
+  owners: PropTypes.array.isRequired,
+};
+
+const mapStateToProps = (state) => {
   return {
     owners: state.vetClinic.owners,
   };
 };
 
-export default connect(maptStateToProps, { fetchOwners })(Owner);
+export default connect(mapStateToProps, { fetchOwners })(Owner);

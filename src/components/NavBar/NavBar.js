@@ -45,8 +45,18 @@ class Navbar extends Component {
                   </a>
                 </li>
                 <li className='nav-item'>
+                  <a className='nav-link' href='/owners-dashboard'>
+                    Owners Dashboard
+                  </a>
+                </li>
+                <li className='nav-item'>
                   <a className='nav-link' href='/patients'>
                     Active Patients
+                  </a>
+                </li>
+                <li className='nav-item'>
+                  <a className='nav-link' href='/patients-dashboard'>
+                    Patients Dashboard
                   </a>
                 </li>
               </ul>

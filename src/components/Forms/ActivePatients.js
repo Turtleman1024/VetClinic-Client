@@ -3,6 +3,7 @@ import Container from 'react-bootstrap/Container';
 import { connect } from 'react-redux';
 import Patient from '../Forms/Patient';
 import NavBar from '../NavBar/NavBar';
+import PropTypes from 'prop-types';
 import { fetchActivePatients } from '../../actions/patients';
 
 export class ActivePatients extends Component {
@@ -22,7 +23,10 @@ export class ActivePatients extends Component {
     return (
       <div>
         <NavBar />
-        <Container style={{ backgroundColor: '#f0f8ff' }}>
+        <Container
+          className='p-3 my-3 border'
+          style={{ backgroundColor: '#f0f8ff' }}
+        >
           {this.props.patients.map((patient) => (
             <Patient
               key={patient.patientId}
@@ -35,6 +39,11 @@ export class ActivePatients extends Component {
     );
   }
 }
+
+ActivePatients.propTypes = {
+  fetchActivePatients: PropTypes.func.isRequired,
+  patients: PropTypes.array.isRequired,
+};
 
 const maptStateToProps = (state) => {
   return {
