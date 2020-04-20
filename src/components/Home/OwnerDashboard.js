@@ -26,7 +26,7 @@ export class OwnerDashboard extends Component {
             </thead>
             <tbody>
               {this.props.owners.map((owner) => (
-                <tr>
+                <tr key={owner.ownerId}>
                   <td>{owner.ownerId}</td>
                   <td>{owner.ownerFirstName}</td>
                   <td>{owner.ownerLastName}</td>

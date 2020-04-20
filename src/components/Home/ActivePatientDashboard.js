@@ -26,7 +26,7 @@ export class ActivePatientDashboard extends Component {
             </thead>
             <tbody>
               {this.props.patients.map((patient) => (
-                <tr>
+                <tr key={patient.patientId}>
                   <td>{patient.patientId}</td>
                   <td>{patient.patientName}</td>
                   <td>{patient.patientSpecies}</td>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FormGroup, Row, Col, Container } from 'react-bootstrap';
+import { Row, Col, Container } from 'react-bootstrap';
 import Input from '../Input/Input';
 import Patient from './Patient';
 
@@ -31,85 +31,75 @@ export class Owner extends Component {
         className='p-3 my-3 border'
         style={{ backgroundColor: '#3498db' }}
       >
-        <FormGroup key={this.state.ownerId}>
-          <Row>
-            <Col md={1} />
-            <Col className='field-area'>
-              <Input
-                name='ownerFirstName'
-                type='text'
-                value={this.state.ownerFirstName}
-                label="Owner's First Name"
-                placeholderText="Enter Owner's First Name"
-                onChange={this.onChange}
-                onBlur={this.onBlur}
-              />
-            </Col>
-            <Col md={1} />
-            <Col className='field-area'>
-              <Input
-                name='ownerLastName'
-                type='text'
-                value={this.state.ownerLastName}
-                label="Owner's Last Name"
-                placeholderText="Enter Owner's Last Name"
-                onChange={this.onChange}
-                onBlur={this.onBlur}
-              />
-            </Col>
-            <Col md={1} />
-          </Row>
-          <Row>
-            <Col md={1} />
-            <Col md={10} className='field-address'>
-              <Input
-                name='ownerAddress'
-                type='text'
-                value={this.state.ownerAddress}
-                label="Owner's Address"
-                placeholderText="Enter Owner's Address"
-                onChange={this.onChange}
-                onBlur={this.onBlur}
-              />
-            </Col>
-            <Col md={1} />
-          </Row>
-          <Row>
-            <Col md={1} />
-            <Col className='field-area'>
-              <Input
-                name='ownerCity'
-                type='text'
-                value={this.state.ownerCity}
-                label="Owner's City"
-                placeholderText="Enter Owner's City"
-                onChange={this.onChange}
-                onBlur={this.onBlur}
-              />
-            </Col>
-            <Col md={1} />
-            <Col className='field-area'>
-              <Input
-                name='ownerZip'
-                type='number'
-                value={this.state.ownerZip}
-                label="Owner's Zip"
-                placeholderText="Enter Owner's Zip"
-                onChange={this.onChange}
-                onBlur={this.onBlur}
-              />
-            </Col>
-            <Col md={1} />
-          </Row>
-          {this.state.ownerPets &&
-            this.state.ownerPets.map((patient) => (
-              <Patient
-                key={patient.patientId}
-                patient={patient}
-                readOnly={false}
-              />
-            ))}
-        </FormGroup>
+        <Row>
+          <Col>
+            <Input
+              name='ownerFirstName'
+              type='text'
+              value={this.state.ownerFirstName}
+              label="Owner's First Name"
+              placeholderText="Enter Owner's First Name"
+              onChange={this.onChange}
+              onBlur={this.onBlur}
+            />
+          </Col>
+          <Col>
+            <Input
+              name='ownerLastName'
+              type='text'
+              value={this.state.ownerLastName}
+              label="Owner's Last Name"
+              placeholderText="Enter Owner's Last Name"
+              onChange={this.onChange}
+              onBlur={this.onBlur}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Input
+              name='ownerAddress'
+              type='text'
+              value={this.state.ownerAddress}
+              label="Owner's Address"
+              placeholderText="Enter Owner's Address"
+              onChange={this.onChange}
+              onBlur={this.onBlur}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Input
+              name='ownerCity'
+              type='text'
+              value={this.state.ownerCity}
+              label="Owner's City"
+              placeholderText="Enter Owner's City"
+              onChange={this.onChange}
+              onBlur={this.onBlur}
+            />
+          </Col>
+          <Col>
+            <Input
+              name='ownerZip'
+              type='number'
+              value={this.state.ownerZip}
+              label="Owner's Zip"
+              placeholderText="Enter Owner's Zip"
+              onChange={this.onChange}
+              onBlur={this.onBlur}
+            />
+          </Col>
+        </Row>
+        {this.state.ownerPets &&
+          this.state.ownerPets.map((patient) => (
+            <Patient
+              key={patient.patientId}
+              patient={patient}
+              readOnly={false}
+            />
+          ))}
       </Container>
     );
   }

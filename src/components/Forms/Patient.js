@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FormGroup, Row, Col, FormLabel } from 'react-bootstrap';
+import { Container, Row, Col, FormLabel } from 'react-bootstrap';
 import Input from '../Input/Input';
 import TextArea from '../TextArea/TextArea';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -34,113 +34,101 @@ export class Patient extends Component {
   render() {
     return (
       <div className='App' style={{ backgroundColor: '#74b9ff' }}>
-        <FormGroup key={this.state.patientId}>
-          <Col md={1} />
-          <Col md={10}>
-            <Row>
-              <Col md={1} />
-              <Col>
-                <FormLabel>Is Patient Active</FormLabel>
-              </Col>
-              <Col md={1} />
-            </Row>
-            <Row>
-              <Col md={1} />
-              <Col md={1}>
-                <input
-                  type='checkbox'
-                  id='isActive'
-                  name='isActive'
-                  checked={this.state.isActive}
-                  onChange={this.toggleCheckbox}
-                  disabled={this.props.readOnly}
-                />
-                <label>{'Yes'}</label>
-              </Col>
-              <Col md={1}>
-                <input
-                  type='checkbox'
-                  id='isActive'
-                  name='isActive'
-                  checked={!this.state.isActive}
-                  onChange={this.toggleCheckbox}
-                  disabled={this.props.readOnly}
-                />
-                <label>{'No'}</label>
-              </Col>
-              <Col md={1} />
-            </Row>
-            <Row>
-              <Col md={1} />
-              <Col className='field-area'>
-                <Input
-                  name='patientName'
-                  type='text'
-                  value={this.state.patientName}
-                  label='Patient Name'
-                  placeholderText="Enter Patient's Name"
-                  onChange={this.onChange}
-                  onBlur={this.onBlur}
-                />
-              </Col>
-              <Col md={3} />
-              <Col>
-                <Input
-                  name='patientSpecies'
-                  type='text'
-                  value={this.state.patientSpecies}
-                  label="Patient's Species"
-                  placeholderText="Enter Patient's Species"
-                  onChange={this.onChange}
-                  onBlur={this.onBlur}
-                />
-              </Col>
-            </Row>
-            <Row>
-              <Col md={1} />
-              <Col className='field-area'>
-                <Input
-                  name='patientGender'
-                  type='text'
-                  value={this.state.patientGender}
-                  label="Patient's Gender"
-                  placeholderText="Enter Patient's Gender"
-                  onChange={this.onChange}
-                  onBlur={this.onBlur}
-                />
-              </Col>
-              <Col md={3} />
-              <Col>
-                <Input
-                  name='patientBirthDate'
-                  type='text'
-                  value={new Date(
-                    this.state.patientBirthDate
-                  ).toLocaleDateString('en-US')}
-                  label="Patient's Birth Date"
-                  placeholderText="Enter Patient's Birth Date"
-                  onChange={this.onChange}
-                  onBlur={this.onBlur}
-                />
-              </Col>
-            </Row>
-            <Row>
-              <Col md={1} />
-              <Col className='field-area'>
-                <TextArea
-                  name='patientNotes'
-                  type='text'
-                  value={this.state.patientNotes}
-                  label='Patient Notes'
-                  placeholderText="Enter Patient's Notes"
-                  onChange={this.onChange}
-                  onBlur={this.onBlur}
-                />
-              </Col>
-            </Row>
-          </Col>
-          <Col md={1} />
-        </FormGroup>
+        <Container>
+          <Row>
+            <Col>
+              <FormLabel>Is Patient Active</FormLabel>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={1}>
+              <input
+                type='checkbox'
+                id='isActive'
+                name='isActive'
+                checked={this.state.isActive}
+                onChange={this.toggleCheckbox}
+                disabled={this.props.readOnly}
+              />
+              <label>{'Yes'}</label>
+            </Col>
+            <Col md={1}>
+              <input
+                type='checkbox'
+                id='isActive'
+                name='isActive'
+                checked={!this.state.isActive}
+                onChange={this.toggleCheckbox}
+                disabled={this.props.readOnly}
+              />
+              <label>{'No'}</label>
+            </Col>
+            <Col md={1} />
+          </Row>
+          <Row>
+            <Col>
+              <Input
+                name='patientName'
+                type='text'
+                value={this.state.patientName}
+                label="Patient's Name"
+                placeholderText="Enter Patient's Name"
+                onChange={this.onChange}
+                onBlur={this.onBlur}
+              />
+            </Col>
+            <Col>
+              <Input
+                name='patientSpecies'
+                type='text'
+                value={this.state.patientSpecies}
+                label="Patient's Species"
+                placeholderText="Enter Patient's Species"
+                onChange={this.onChange}
+                onBlur={this.onBlur}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Input
+                name='patientGender'
+                type='text'
+                value={this.state.patientGender}
+                label="Patient's Gender"
+                placeholderText="Enter Patient's Gender"
+                onChange={this.onChange}
+                onBlur={this.onBlur}
+              />
+            </Col>
+            <Col>
+              <Input
+                name='patientBirthDate'
+                type='text'
+                value={new Date(this.state.patientBirthDate).toLocaleDateString(
+                  'en-US'
+                )}
+                label="Patient's Birth Date"
+                placeholderText="Enter Patient's Birth Date"
+                onChange={this.onChange}
+                onBlur={this.onBlur}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <TextArea
+                name='patientNotes'
+                type='text'
+                value={this.state.patientNotes}
+                label='Patient Notes'
+                placeholderText="Enter Patient's Notes"
+                onChange={this.onChange}
+                onBlur={this.onBlur}
+              />
+            </Col>
+          </Row>
+        </Container>
       </div>
     );
   }
