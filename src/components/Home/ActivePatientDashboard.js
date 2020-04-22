@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchActivePatients } from '../../actions/patients';
-import NavBar from '../NavBar/NavBar';
 import PropTypes from 'prop-types';
 import { Container, Table } from 'react-bootstrap';
 
@@ -13,7 +12,6 @@ export class ActivePatientDashboard extends Component {
   render() {
     return (
       <div>
-        <NavBar />
         <Container className='p-3 my-3 border'>
           <Table striped bordered hover variant='light'>
             <thead style={{ backgroundColor: '#0984e3' }}>

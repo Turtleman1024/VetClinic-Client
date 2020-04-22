@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Container from 'react-bootstrap/Container';
 import { connect } from 'react-redux';
 import Patient from '../Forms/Patient';
-import NavBar from '../NavBar/NavBar';
 import PropTypes from 'prop-types';
 import { fetchActivePatients } from '../../actions/patients';
 
@@ -22,7 +21,6 @@ export class ActivePatients extends Component {
   render() {
     return (
       <div>
-        <NavBar />
         <Container
           className='p-3 my-3 border'
           style={{ backgroundColor: '#f0f8ff' }}

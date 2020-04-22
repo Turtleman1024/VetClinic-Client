@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import './VetClinic.css'; //Global css
-import { BrowserRouter as Router } from 'react-router-dom';
-import Route from 'react-router-dom/Route';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Home from './components/Home/Home';
-import OwnerForm from './components/Home/Owner';
+import OwnerForm from './components/Forms/Owner';
 import OwnerDashboard from './components/Home/OwnerDashboard';
 import PatientDashboard from './components/Home/ActivePatientDashboard';
 import Patients from './components/Forms/ActivePatients';
+import Navbar from './components/NavBar/NavBar';
 import { Provider } from 'react-redux';
 import store from './store/store';
 
@@ -15,8 +15,9 @@ export class VetClinic extends Component {
     return (
       <Provider store={store}>
         <Router>
+          <Navbar />
           <Route path='/' exact strict component={Home} />
-          <Route path='/owners' exact strict component={OwnerForm} />
+          <Route path='/owner/:ownerId' exact strict component={OwnerForm} />
           <Route
             path='/owners-dashboard'
             exact
