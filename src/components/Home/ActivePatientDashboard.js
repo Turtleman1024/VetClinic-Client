@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { fetchActivePatients } from '../../actions/patients';
 import PropTypes from 'prop-types';
 import { Container, Table } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 export class ActivePatientDashboard extends Component {
   componentDidMount() {
@@ -15,6 +16,13 @@ export class ActivePatientDashboard extends Component {
         <Container className='p-3 my-3 border'>
           <Table striped bordered hover variant='light'>
             <thead style={{ backgroundColor: '#0984e3' }}>
+              <tr style={{ backgroundColor: '#ffffff' }}>
+                <th>
+                  {this.props.isHomePage
+                    ? 'Patients being cared for'
+                    : 'Patients'}
+                </th>
+              </tr>
               <tr>
                 <th>Id</th>
                 <th>Patient Name</th>
@@ -25,7 +33,11 @@ export class ActivePatientDashboard extends Component {
             <tbody>
               {this.props.patients.map((patient) => (
                 <tr key={patient.patientId}>
-                  <td>{patient.patientId}</td>
+                  <td>
+                    <Link to={'/patient/' + patient.patientId}>
+                      {patient.patientId}
+                    </Link>
+                  </td>
                   <td>{patient.patientName}</td>
                   <td>{patient.patientSpecies}</td>
                   <td>{patient.patientGender}</td>
@@ -42,6 +54,7 @@ export class ActivePatientDashboard extends Component {
 ActivePatientDashboard.propTypes = {
   fetchActivePatients: PropTypes.func.isRequired,
   patients: PropTypes.array.isRequired,
+  isHomePage: PropTypes.bool,
 };
 
 const maptStateToProps = (state) => {

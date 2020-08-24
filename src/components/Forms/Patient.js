@@ -3,6 +3,7 @@ import { Container, Row, Col, FormLabel } from 'react-bootstrap';
 import Input from '../Input/Input';
 import TextArea from '../TextArea/TextArea';
 import 'bootstrap/dist/css/bootstrap.css';
+import { connect } from 'react-redux';
 
 export class Patient extends Component {
   constructor(props) {
@@ -35,6 +36,9 @@ export class Patient extends Component {
     return (
       <div className='App' style={{ backgroundColor: '#74b9ff' }}>
         <Container>
+          <Row>
+            <Col>{`Patient Id: ${this.state.patientId}`}</Col>
+          </Row>
           <Row>
             <Col>
               <FormLabel>Is Patient Active</FormLabel>
@@ -134,4 +138,18 @@ export class Patient extends Component {
   }
 }
 
-export default Patient;
+const mapStateToProps = (state, ownProps) => {
+  if (ownProps.patient) {
+    return {
+      patient: ownProps.patient,
+    };
+  }
+  let id = ownProps.match.params.patientId;
+  return {
+    patient: state.vetClinic.patients.find(
+      (patient) => patient.patientId.toString() === id
+    ),
+  };
+};
+
+export default connect(mapStateToProps)(Patient);

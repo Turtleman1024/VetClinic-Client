@@ -16,6 +16,9 @@ export class OwnerDashboard extends Component {
         <Container className='p-3 my-3 border'>
           <Table striped bordered hover variant='light'>
             <thead style={{ backgroundColor: '#0984e3' }}>
+              <tr style={{ backgroundColor: '#ffffff' }}>
+                <th>Owners</th>
+              </tr>
               <tr>
                 <th>Id</th>
                 <th>First Name</th>

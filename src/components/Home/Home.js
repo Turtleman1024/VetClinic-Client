@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ActivePatients from './ActivePatientDashboard';
 
 export class Home extends Component {
   state = {};
@@ -6,6 +7,7 @@ export class Home extends Component {
     return (
       <div>
         <h1>Welcome to Home Page</h1>
+        <ActivePatients isHomePage={true} />
       </div>
     );
   }
