@@ -14,7 +14,7 @@ const Home = () => {
   const onChange = (name, value) => {
     setSearchValue(value);
     if (value) {
-      fetch('https://localhost:44368/api/v1/owner/search-phone/' + value)
+      fetch('https://localhost:44368/api/v1/owner/search-owner/' + value)
         .then((response) =>
           response.json())
         .then((owners) => setSearchResults(owners));
@@ -28,11 +28,11 @@ const Home = () => {
       <div>
         <h1>Welcome to Home Page</h1>
         <Input
-          name='searchByPhoneNumber'
+          name='searchForOwner'
           type='text'
           value={searchValue}
-          label="Search by Owner's Phone Number"
-          placeholderText="Enter Owner's Phone Number"
+          label="Search for Owner's"
+          placeholderText="Start typing to find owner"
           onChange={onChange}
           onBlur={onBlur}
         />
@@ -47,6 +47,7 @@ const Home = () => {
                   <th>Id</th>
                   <th>First Name</th>
                   <th>Last Name</th>
+                  <th>Pets Names</th>
                   <th>Phone</th>
                 </tr>
               </thead>
@@ -54,10 +55,11 @@ const Home = () => {
                 {searchResults.map((owner) => (
                   <tr key={owner.ownerId}>
                     <td>
-                      <Link to={'/owner/' + owner.ownerId}>{owner.ownerId}</Link>
+                      <Link to={`/owner/${owner.ownerId}`}>{owner.ownerId}</Link>
                     </td>
                     <td>{owner.ownerFirstName}</td>
                     <td>{owner.ownerLastName}</td>
+                    <td>{owner.ownerPets.length > 0 ? (owner.ownerPets.map((x) => (<div key={x.patientId}>{<Link to={`/patient/${x.id}`}>{x.patientName}</Link>}</div>))) : ('NF') }</td>
                     <td>{owner.ownerPhone}</td>
                   </tr>
                 ))}
