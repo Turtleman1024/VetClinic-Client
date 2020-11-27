@@ -59,7 +59,7 @@ const Home = () => {
                     </td>
                     <td>{owner.ownerFirstName}</td>
                     <td>{owner.ownerLastName}</td>
-                    <td>{owner.ownerPets.length > 0 ? (owner.ownerPets.map((x) => (<div key={x.patientId}>{<Link to={`/patient/${x.id}`}>{x.patientName}</Link>}</div>))) : ('NF') }</td>
+                    <td>{owner.ownerPets.length > 0 ? (owner.ownerPets.map((x) => (<div key={x.patientId}>{<Link to={`/patient/${x.patientId}`}>{x.patientName}</Link>}</div>))) : ('NF') }</td>
                     <td>{owner.ownerPhone}</td>
                   </tr>
                 ))}
