@@ -39,7 +39,11 @@ export class Input extends PureComponent {
         )}
         {this.props.addon ? (
           <InputGroup className='mb-3'>
-            <InputGroup.Addon>{this.props.addon}</InputGroup.Addon>
+            <InputGroup.Prepend>
+              <InputGroup.Text>
+                {this.props.addon}
+              </InputGroup.Text>
+            </InputGroup.Prepend>
             {inputControl}
           </InputGroup>
         ) : (
