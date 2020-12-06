@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, FormLabel } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
+import { Label } from '@fluentui/react/lib/Label';
+import { Checkbox } from '@fluentui/react/lib/Checkbox';
 import Input from '../Input/Input';
 import TextArea from '../TextArea/TextArea';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -8,12 +10,14 @@ import { useParams } from "react-router-dom";
 const Patient = () => {  
   const { patientId } = useParams();
   const [state, setState] = useState(null);
+  const [dirtyFields, setDirtyFields] = useState({});
 
   useEffect(() => {
     if (patientId) {
       fetch('https://localhost:44368/api/v1/patient/id/' + patientId)
         .then((response) => response.json())
-        .then((patient) => setState(patient));
+        .then((patient) => setState(patient))
+        .catch(err => console.log(err));
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -23,6 +27,21 @@ const Patient = () => {
       ...prev,
       [name]: value
     }));
+
+    patchData(state.patientId, [{ op: 'replace', path: `/${name}`, value: value }]);
+
+  };
+
+  const patchData = (id, data) => {
+    return fetch('https://localhost:44368/api/v1/patient/' + id, {
+        method: 'PATCH',
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(res => {
+        return res;
+    }).catch(err => console.log(err));
   };
 
   const onChange = (name, value) => {
@@ -35,12 +54,14 @@ const Patient = () => {
   const toggleCheckbox = (name, value) => {
     setState((prev) => ({
       ...prev,
-      [name]: !value,
+      [name]: value,
     }));
+
+    patchData(state.patientId, [{ op: 'replace', path: `/${name}`, value: value }]);
   };
 
     return (
-      <div className='App' style={{ backgroundColor: '#74b9ff' }}>
+      <div className='App' style={{ backgroundColor: '#ffffff' }}>
         {state &&
           <Container>
             <Row>
@@ -48,31 +69,15 @@ const Patient = () => {
             </Row>
             <Row>
               <Col>
-                <FormLabel>Is Patient Active</FormLabel>
+                <Label>Is Patient Active</Label>
               </Col>
             </Row>
             <Row>
-              <Col md={1}>
-                <input
-                  type='checkbox'
-                  id='isActive'
-                  name='isActive'
-                  checked={state.isActive}
-                  onChange={(e) => toggleCheckbox(e.target.name, e.target.checked)}
-                  //disabled={this.props.readOnly}
-                />
-                <label>{'Yes'}</label>
-              </Col>
-              <Col md={1}>
-                <input
-                  type='checkbox'
-                  id='isActive'
-                  name='isActive'
-                  checked={!state.isActive}
-                  onChange={(e) => toggleCheckbox(e.target.name, e.target.checked)}
-                  //disabled={this.props.readOnly}
-                />
-                <label>{'No'}</label>
+            <Col md={1}>
+              <Checkbox name='isActive' label='Yes' checked={state.isActive} onChange={(e) => toggleCheckbox(e.target.name, e.target.checked)}/>
+            </Col>
+              <Col md={1}>                
+                <Checkbox name='isActive' label='No' checked={!state.isActive} onChange={(e) => toggleCheckbox(e.target.name, !e.target.checked)}/>
               </Col>
               <Col md={1} />
             </Row>
