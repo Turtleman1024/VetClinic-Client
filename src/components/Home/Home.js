@@ -2,6 +2,18 @@ import React, { useState } from 'react';
 import Input from '../Input/Input';
 import { Container, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+const CustomToast = (props) => {
+  return (
+    <div>
+      <header style={{ textAlign: 'center', color: 'black' }}>Warning!</header>
+      <p>{props.message}</p>
+    </div>
+  );
+};
+
 
 const Home = () => {
   const [searchValue, setSearchValue] = useState('');
@@ -12,17 +24,20 @@ const Home = () => {
   };
 
   const onChange = (name, value) => {
-    setSearchValue(value);
-    if (value) {
+    if (!value || !/\S/.test(value)) {
+      notify('warning','Value must be entered!')
+      setSearchResults([]);
+    }
+    else {
       fetch('https://localhost:44368/api/v1/owner/search-owner/' + value)
         .then((response) =>
           response.json())
         .then((owners) => setSearchResults(owners));
     }
-    else {
-      setSearchResults([]);
-    }
+    setSearchValue(value);
   };
+
+  const notify = (type, message) => toast[type](<CustomToast message={message}/>);
 
     return (
       <div>
@@ -67,6 +82,7 @@ const Home = () => {
             </Table>
           </Container>
         }
+        <ToastContainer/>
       </div>
     );
 }
