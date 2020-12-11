@@ -1,19 +1,9 @@
 import React, { useState } from 'react';
 import Input from '../Input/Input';
+import ToastifyNotification from '../core/ToastifyNotification';
 import { Container, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
-const CustomToast = (props) => {
-  return (
-    <div>
-      <header style={{ textAlign: 'center', color: 'black' }}>Warning!</header>
-      <p>{props.message}</p>
-    </div>
-  );
-};
-
 
 const Home = () => {
   const [searchValue, setSearchValue] = useState('');
@@ -25,7 +15,7 @@ const Home = () => {
 
   const onChange = (name, value) => {
     if (!value || !/\S/.test(value)) {
-      notify('warning','Value must be entered!')
+      notify('warning', 'Invalid Input', 'Value must be entered!')
       setSearchResults([]);
     }
     else {
@@ -37,7 +27,7 @@ const Home = () => {
     setSearchValue(value);
   };
 
-  const notify = (type, message) => toast[type](<CustomToast message={message}/>);
+  const notify = (type, title, body) => toast[type](<ToastifyNotification title={title} notificationBody={body}/>);
 
     return (
       <div>
