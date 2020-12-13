@@ -1,27 +1,35 @@
 import React, { useState } from 'react';
 import Input from '../Input/Input';
+import ToastifyNotification from '../core/ToastifyNotification';
 import { Container, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const Home = () => {
   const [searchValue, setSearchValue] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-  
+ 
   const onBlur = (name, value) => {
     setSearchValue(value);
   };
 
   const onChange = (name, value) => {
-    setSearchValue(value);
-    if (value) {
+    if (!value || !/\S/.test(value)) {
+      notify('warning', 'Invalid Input', 'Value must be entered!');
+      setSearchResults([]);
+    }
+    else {
       fetch('https://localhost:44368/api/v1/owner/search-owner/' + value)
         .then((response) =>
           response.json())
-        .then((owners) => setSearchResults(owners));
+        .then((owners) => setSearchResults(owners))
+        .catch(err => console.log(err));
     }
-    else {
-      setSearchResults([]);
-    }
+    setSearchValue(value);
+  };
+
+  const notify = (type, title, body) => {
+    toast[type](<ToastifyNotification title={title} notificationBody={body} />);
   };
 
     return (

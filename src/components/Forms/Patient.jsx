@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
 import { Label } from '@fluentui/react/lib/Label';
 import { Checkbox } from '@fluentui/react/lib/Checkbox';
-import Input from '../Input/Input';
-import TextArea from '../TextArea/TextArea';
-import 'bootstrap/dist/css/bootstrap.css';
+import { Stack } from '@fluentui/react/lib/Stack';
+import { TextField } from '@fluentui/react/lib/TextField';
 import { useParams } from "react-router-dom";
 
 const Patient = () => {  
   const { patientId } = useParams();
   const [state, setState] = useState(null);
-  const [dirtyFields, setDirtyFields] = useState({});
 
   useEffect(() => {
     if (patientId) {
@@ -63,62 +60,44 @@ const Patient = () => {
     return (
       <div className='App' style={{ backgroundColor: '#ffffff' }}>
         {state &&
-          <Container>
-            <Row>
-              <Col>{`Patient Id: ${state.patientId}`}</Col>
-            </Row>
-            <Row>
-              <Col>
-                <Label>Is Patient Active</Label>
-              </Col>
-            </Row>
-            <Row>
-            <Col md={1}>
-              <Checkbox name='isActive' label='Yes' checked={state.isActive} onChange={(e) => toggleCheckbox(e.target.name, e.target.checked)}/>
-            </Col>
-              <Col md={1}>                
+          <Stack style={{margin: '50px'}}>
+              {`Patient Id: ${state.patientId}`}
+            <Label>Is Patient Active</Label>
+            <Stack horizontal >
+                <Checkbox name='isActive' label='Yes' checked={state.isActive} onChange={(e) => toggleCheckbox(e.target.name, e.target.checked)}/>             
                 <Checkbox name='isActive' label='No' checked={!state.isActive} onChange={(e) => toggleCheckbox(e.target.name, !e.target.checked)}/>
-              </Col>
-              <Col md={1} />
-            </Row>
-            <Row>
-              <Col>
-                <Input
+            </Stack>
+            <Stack horizontal>
+                <TextField
                   name='patientName'
                   type='text'
                   value={state.patientName}
                   label="Patient's Name"
                   placeholderText="Enter Patient's Name"
-                  onChange={onChange}
-                  onBlur={onBlur}
+                  onChange={(e) => onChange(e.target.name, e.target.value)}
+                  onBlur={(e) => onBlur(e.target.name, e.target.value)}
                 />
-              </Col>
-              <Col>
-                <Input
+                <TextField
                   name='patientSpecies'
                   type='text'
                   value={state.patientSpecies}
                   label="Patient's Species"
                   placeholderText="Enter Patient's Species"
-                  onChange={onChange}
-                  onBlur={onBlur}
+                  onChange={(e) => onChange(e.target.name, e.target.value)}
+                  onBlur={(e) => onBlur(e.target.name, e.target.value)}
                 />
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <Input
+            </Stack>
+            <Stack horizontal>
+                <TextField
                   name='patientGender'
                   type='text'
                   value={state.patientGender}
                   label="Patient's Gender"
                   placeholderText="Enter Patient's Gender"
-                  onChange={onChange}
-                  onBlur={onBlur}
+                  onChange={(e) => onChange(e.target.name, e.target.value)}
+                  onBlur={(e) => onBlur(e.target.name, e.target.value)}
                 />
-              </Col>
-              <Col>
-                <Input
+                <TextField
                   name='patientBirthDate'
                   type='text'
                   value={new Date(state.patientBirthDate).toLocaleDateString(
@@ -126,25 +105,22 @@ const Patient = () => {
                   )}
                   label="Patient's Birth Date"
                   placeholderText="Enter Patient's Birth Date"
-                  onChange={onChange}
-                  onBlur={onBlur}
+                  onChange={(e) => onChange(e.target.name, e.target.value)}
+                  onBlur={(e) => onBlur(e.target.name, e.target.value)}
                 />
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <TextArea
-                  name='patientNotes'
-                  type='text'
-                  value={state.patientNotes}
-                  label='Patient Notes'
-                  placeholderText="Enter Patient's Notes"
-                  onChange={onChange}
-                  onBlur={onBlur}
-                />
-              </Col>
-            </Row>
-          </Container>
+            </Stack>
+            <TextField
+              name='patientNotes'
+              type='text'
+              value={state.patientNotes}
+              label='Patient Notes'
+              placeholderText="Enter Patient's Notes"
+              onChange={(e) => onChange(e.target.name, e.target.value)}
+              onBlur={(e) => onBlur(e.target.name, e.target.value)}
+              rows={3}
+              multiline
+            />
+          </Stack>
         }
       </div>
     );
