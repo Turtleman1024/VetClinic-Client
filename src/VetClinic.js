@@ -8,6 +8,7 @@ import OwnerDashboard from './components/Home/OwnerDashboard';
 import PatientDashboard from './components/Home/ActivePatientDashboard';
 import Patients from './components/Forms/ActivePatients';
 import Navbar from './components/NavBar/NavBar';
+import { ToastContainer } from 'react-toastify';
 import { Provider } from 'react-redux';
 import store from './store/store';
 
@@ -33,6 +34,7 @@ export class VetClinic extends Component {
             strict
             component={PatientDashboard}
           />
+        <ToastContainer/>
         </Router>
       </Provider>
     );
