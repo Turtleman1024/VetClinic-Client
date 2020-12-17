@@ -1,0 +1,11 @@
+.checkbox + .checkbox {
+  padding-left: 8px;
+}
+
+.input-field {
+  width: 300px;
+}
+
+.input-field + .input-field {
+  padding-left: 24px;
+}

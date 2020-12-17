@@ -3,11 +3,15 @@ import { Label } from '@fluentui/react/lib/Label';
 import { Checkbox } from '@fluentui/react/lib/Checkbox';
 import { Stack } from '@fluentui/react/lib/Stack';
 import { TextField } from '@fluentui/react/lib/TextField';
+import { Dropdown } from '@fluentui/react/lib/Dropdown';
 import { useParams } from "react-router-dom";
+
+import './patient.css';
 
 const Patient = () => {  
   const { patientId } = useParams();
   const [state, setState] = useState(null);
+  const genderOptions = [{ key: 'M', text: 'Male' }, { key: 'F', text: 'Female' }];
 
   useEffect(() => {
     if (patientId) {
@@ -18,6 +22,15 @@ const Patient = () => {
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const onChange = (name, value) => {
+    setState((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+    
+    if (name === 'patientGender') onBlur(name, value);
+  };
   
   const onBlur = (name, value) => {
     setState((prev) => ({
@@ -26,26 +39,21 @@ const Patient = () => {
     }));
 
     patchData(state.patientId, [{ op: 'replace', path: `/${name}`, value: value }]);
-
   };
 
-  const patchData = (id, data) => {
-    return fetch('https://localhost:44368/api/v1/patient/' + id, {
+  const patchData = async (id, data) => {
+    try {
+      const res = await fetch('https://localhost:44368/api/v1/patient/' + id, {
         method: 'PATCH',
         body: JSON.stringify(data),
         headers: {
-            'Content-Type': 'application/json'
+          'Content-Type': 'application/json'
         }
-    }).then(res => {
-        return res;
-    }).catch(err => console.log(err));
-  };
-
-  const onChange = (name, value) => {
-    setState((prev) => ({
-      ...prev,
-      [name]: value
-    }));
+      });
+      return res;
+    } catch (err) {
+      return console.log(err);
+    }
   };
 
   const toggleCheckbox = (name, value) => {
@@ -64,11 +72,12 @@ const Patient = () => {
               {`Patient Id: ${state.patientId}`}
             <Label>Is Patient Active</Label>
             <Stack horizontal >
-                <Checkbox name='isActive' label='Yes' checked={state.isActive} onChange={(e) => toggleCheckbox(e.target.name, e.target.checked)}/>             
-                <Checkbox name='isActive' label='No' checked={!state.isActive} onChange={(e) => toggleCheckbox(e.target.name, !e.target.checked)}/>
+                <Checkbox className='checkbox' name='isActive' label='Yes' checked={state.isActive} onChange={(e) => toggleCheckbox(e.target.name, e.target.checked)}/>             
+                <Checkbox className='checkbox' name='isActive' label='No' checked={!state.isActive} onChange={(e) => toggleCheckbox(e.target.name, !e.target.checked)}/>
             </Stack>
             <Stack horizontal>
-                <TextField
+            <TextField
+                  className='input-field'
                   name='patientName'
                   type='text'
                   value={state.patientName}
@@ -78,6 +87,7 @@ const Patient = () => {
                   onBlur={(e) => onBlur(e.target.name, e.target.value)}
                 />
                 <TextField
+                  className='input-field'
                   name='patientSpecies'
                   type='text'
                   value={state.patientSpecies}
@@ -88,16 +98,17 @@ const Patient = () => {
                 />
             </Stack>
             <Stack horizontal>
-                <TextField
+            <Dropdown
+                  className='input-field'
                   name='patientGender'
-                  type='text'
-                  value={state.patientGender}
+                  selectedKey={state.patientGender}
                   label="Patient's Gender"
                   placeholderText="Enter Patient's Gender"
-                  onChange={(e) => onChange(e.target.name, e.target.value)}
-                  onBlur={(e) => onBlur(e.target.name, e.target.value)}
+                  options={genderOptions}
+                  onChange={(e, opt) => onChange('patientGender', opt.key)}
                 />
                 <TextField
+                  className='input-field'
                   name='patientBirthDate'
                   type='text'
                   value={new Date(state.patientBirthDate).toLocaleDateString(
