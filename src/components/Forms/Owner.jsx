@@ -68,7 +68,8 @@ const Owner = () => {
   return (
     <div>
       {state && (
-        <Stack style={{ margin: '50px' }}>
+        <Stack className='form-container'>
+          <Label style={{ fontSize: 'xx-large' }}>Owner Info</Label>
           <Stack horizontal>
             <TextField
               className='input-field'
@@ -76,7 +77,7 @@ const Owner = () => {
               type='text'
               value={state.ownerFirstName}
               label="Owner's First Name"
-              placeholderText="Enter Owner's First Name"
+              placeholder="Enter Owner's First Name"
               onChange={(e) => onChange(e.target.name, e.target.value)}
               onBlur={(e) => onBlur(e.target.name, e.target.value)}
             />
@@ -86,7 +87,7 @@ const Owner = () => {
               type='text'
               value={state.ownerLastName}
               label="Owner's Last Name"
-              placeholderText="Enter Owner's Last Name"
+              placeholder="Enter Owner's Last Name"
               onChange={(e) => onChange(e.target.name, e.target.value)}
               onBlur={(e) => onBlur(e.target.name, e.target.value)}
             />
@@ -98,7 +99,7 @@ const Owner = () => {
               type='text'
               value={state.ownerAddress}
               label="Owner's Address"
-              placeholderText="Enter Owner's Address"
+              placeholder="Enter Owner's Address"
               onChange={(e) => onChange(e.target.name, e.target.value)}
               onBlur={(e) => onBlur(e.target.name, e.target.value)}
             />
@@ -110,7 +111,7 @@ const Owner = () => {
               type='text'
               value={state.ownerCity}
               label="Owner's City"
-              placeholderText="Enter Owner's City"
+              placeholder="Enter Owner's City"
               onChange={(e) => onChange(e.target.name, e.target.value)}
               onBlur={(e) => onBlur(e.target.name, e.target.value)}
             />
@@ -120,15 +121,23 @@ const Owner = () => {
               type='number'
               value={state.ownerZip}
               label="Owner's Zip"
-              placeholderText="Enter Owner's Zip"
+              placeholder="Enter Owner's Zip"
               onChange={(e) => onChange(e.target.name, e.target.value)}
               onBlur={(e) => onBlur(e.target.name, e.target.value)}
             />
           </Stack>
           <Label>Owner's Pets</Label>
-          {createActivityItems().map((items) => (
-            <ActivityItem key={items.key} {...items} />
-          ))}
+          {state.ownerPets.length > 0 ? (
+            <>
+              {createActivityItems().map((items) => (
+                <ActivityItem key={items.key} {...items} />
+              ))}
+            </>
+          ) : (
+            <div>
+              <strong>No Pets Found</strong>
+            </div>
+          )}
         </Stack>
       )}
     </div>

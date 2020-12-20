@@ -1,11 +1,10 @@
 @import '../node_modules/react-toastify/dist/ReactToastify.css';
 
-.field-area {
-  margin: 0px 0px 10px 10px;
-  text-align: left;
+.search-owner {
+  margin-left: 50px;
+  width: 400px;
 }
 
-.field-address {
-  margin: 0px 0px 0px 10px;
-  text-align: left;
+.home-title {
+  margin-left: 12px;
 }

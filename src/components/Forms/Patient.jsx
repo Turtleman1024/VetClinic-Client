@@ -75,13 +75,14 @@ const Patient = () => {
 
   return (
     <div style={{ backgroundColor: '#ffffff' }}>
+      <ActionButton
+        iconProps={{ iconName: 'Back' }}
+        text='Back to Owner'
+        onClick={onBackToOwnerClick}
+      />
       {state && (
-        <Stack style={{ margin: '50px' }}>
-          <ActionButton
-            iconProps={{ iconName: 'Back' }}
-            text='Back to Owner'
-            onClick={onBackToOwnerClick}
-          />
+        <Stack className='form-container'>
+          <Label style={{ fontSize: 'xx-large' }}>Patient Info</Label>
           {`Patient Id: ${state.patientId}`}
           <Label>Is Patient Active</Label>
           <Stack horizontal>
@@ -107,7 +108,7 @@ const Patient = () => {
               type='text'
               value={state.patientName}
               label="Patient's Name"
-              placeholderText="Enter Patient's Name"
+              placeholder="Enter Patient's Name"
               onChange={(e) => onChange(e.target.name, e.target.value)}
               onBlur={(e) => onBlur(e.target.name, e.target.value)}
             />
@@ -117,7 +118,7 @@ const Patient = () => {
               type='text'
               value={state.patientSpecies}
               label="Patient's Species"
-              placeholderText="Enter Patient's Species"
+              placeholder="Enter Patient's Species"
               onChange={(e) => onChange(e.target.name, e.target.value)}
               onBlur={(e) => onBlur(e.target.name, e.target.value)}
             />
@@ -128,7 +129,7 @@ const Patient = () => {
               name='patientGender'
               selectedKey={state.patientGender}
               label="Patient's Gender"
-              placeholderText="Enter Patient's Gender"
+              placeholder="Enter Patient's Gender"
               options={genderOptions}
               onChange={(e, opt) => onChange('patientGender', opt.key)}
             />
@@ -140,7 +141,7 @@ const Patient = () => {
                 'en-US'
               )}
               label="Patient's Birth Date"
-              placeholderText="Enter Patient's Birth Date"
+              placeholder="Enter Patient's Birth Date"
               onChange={(e) => onChange(e.target.name, e.target.value)}
               onBlur={(e) => onBlur(e.target.name, e.target.value)}
             />
@@ -150,7 +151,7 @@ const Patient = () => {
             type='text'
             value={state.patientNotes}
             label='Patient Notes'
-            placeholderText="Enter Patient's Notes"
+            placeholder="Enter Patient's Notes"
             onChange={(e) => onChange(e.target.name, e.target.value)}
             onBlur={(e) => onBlur(e.target.name, e.target.value)}
             rows={3}
