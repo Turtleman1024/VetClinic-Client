@@ -11,7 +11,7 @@ const Owner = () => {
 
   useEffect(() => {
     if (ownerId) {
-      fetch('https://localhost:44368/api/v1/owner/id/' + +ownerId)
+      fetch('https://localhost:44368/api/v1/owner/id/' + ownerId)
         .then((response) => response.json())
         .then((owner) => setState(owner))
         .catch((err) => console.log(err));
