@@ -4,6 +4,7 @@ import { fetchOwners } from '../../actions/owners';
 import PropTypes from 'prop-types';
 import { Container, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { Label } from 'office-ui-fabric-react';
 
 export class OwnerDashboard extends Component {
   componentDidMount() {
@@ -14,11 +15,9 @@ export class OwnerDashboard extends Component {
     return (
       <div>
         <Container className='p-3 my-3 border'>
+          <Label style={{ fontSize: 'xx-large' }}>Owners</Label>
           <Table striped bordered hover variant='light'>
             <thead style={{ backgroundColor: '#0984e3' }}>
-              <tr style={{ backgroundColor: '#ffffff' }}>
-                <th>Owners</th>
-              </tr>
               <tr>
                 <th>Id</th>
                 <th>First Name</th>
