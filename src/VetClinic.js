@@ -6,7 +6,6 @@ import OwnerForm from './components/Forms/Owner';
 import Patient from './components/Forms/Patient';
 import OwnerDashboard from './components/Home/OwnerDashboard';
 import PatientDashboard from './components/Home/ActivePatientDashboard';
-import Patients from './components/Forms/ActivePatients';
 import Navbar from './components/NavBar/NavBar';
 import { ToastContainer } from 'react-toastify';
 import { Provider } from 'react-redux';
@@ -29,7 +28,6 @@ export class VetClinic extends Component {
             component={OwnerDashboard}
           />
           <Route path='/patient/:patientId' exact strict component={Patient} />
-          <Route path='/patients' exact strict component={Patients} />
           <Route
             path='/patients-dashboard'
             exact
