@@ -61,7 +61,7 @@ TextArea.propType = {
   onBlur: PropTypes.func,
   type: PropTypes.string,
   label: PropTypes.node,
-  placeholder: PropTypes.string,
+  placeholderText: PropTypes.string,
   readOnly: PropTypes.bool,
   addon: PropTypes.node,
 };
@@ -69,7 +69,7 @@ TextArea.propType = {
 //Default PropTypes
 TextArea.defaultProps = {
   label: undefined,
-  placeholder: '',
+  placeholderText: '',
   readOnly: false,
   addon: null,
   additionalProps: {},
