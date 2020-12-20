@@ -9,3 +9,12 @@
 .input-field + .input-field {
   padding-left: 24px;
 }
+
+.address-field {
+  width: 600px;
+}
+
+.ms-Button {
+  width: 100px;
+  margin-bottom: 4px;
+}

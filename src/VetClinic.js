@@ -11,9 +11,11 @@ import Navbar from './components/NavBar/NavBar';
 import { ToastContainer } from 'react-toastify';
 import { Provider } from 'react-redux';
 import store from './store/store';
+import { initializeIcons } from '@uifabric/icons';
 
 export class VetClinic extends Component {
   render() {
+    initializeIcons();
     return (
       <Provider store={store}>
         <Router>
@@ -34,7 +36,7 @@ export class VetClinic extends Component {
             strict
             component={PatientDashboard}
           />
-        <ToastContainer/>
+          <ToastContainer />
         </Router>
       </Provider>
     );
