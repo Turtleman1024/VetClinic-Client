@@ -1,7 +1,7 @@
-import { FETCH_OWNERS } from './types';
+import * as types from './types';
 
-export const fetchOwners = () => (dispatch) => {
-  fetch('https://localhost:44368/api/v1/owners')
-    .then((response) => response.json())
-    .then((owners) => dispatch({ type: FETCH_OWNERS, payload: owners }));
-};
+export function fetchOwners() {
+  return { type: types.FETCH_OWNERS_START };
+}
+
+export default fetchOwners;

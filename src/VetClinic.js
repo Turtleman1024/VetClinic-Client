@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './VetClinic.css'; //Global css
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Home from './components/Home/Home';
@@ -12,33 +12,31 @@ import { Provider } from 'react-redux';
 import store from './store/store';
 import { initializeIcons } from '@uifabric/icons';
 
-export class VetClinic extends Component {
-  render() {
-    initializeIcons();
-    return (
-      <Provider store={store}>
-        <Router>
-          <Navbar />
-          <Route path='/' exact strict component={Home} />
-          <Route path='/owner/:ownerId' exact strict component={OwnerForm} />
-          <Route
-            path='/owners-dashboard'
-            exact
-            strict
-            component={OwnerDashboard}
-          />
-          <Route path='/patient/:patientId' exact strict component={Patient} />
-          <Route
-            path='/patients-dashboard'
-            exact
-            strict
-            component={PatientDashboard}
-          />
-          <ToastContainer />
-        </Router>
-      </Provider>
-    );
-  }
-}
+const VetClinic = () => {
+  initializeIcons();
+  return (
+    <Provider store={store}>
+      <Router>
+        <Navbar />
+        <Route path='/' exact strict component={Home} />
+        <Route path='/owner/:ownerId' exact strict component={OwnerForm} />
+        <Route
+          path='/owners-dashboard'
+          exact
+          strict
+          component={OwnerDashboard}
+        />
+        <Route path='/patient/:patientId' exact strict component={Patient} />
+        <Route
+          path='/patients-dashboard'
+          exact
+          strict
+          component={PatientDashboard}
+        />
+        <ToastContainer />
+      </Router>
+    </Provider>
+  );
+};
 
 export default VetClinic;

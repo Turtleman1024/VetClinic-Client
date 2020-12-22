@@ -1,4 +1,4 @@
-import { FETCH_OWNERS, FETCH_ACTIVE_PATIENTS } from '../actions/types';
+import * as types from '../actions/types';
 
 const initialState = {
   owners: [],
@@ -7,15 +7,15 @@ const initialState = {
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case FETCH_OWNERS:
+    case types.FETCH_OWNERS_SUCCESS:
       return {
         ...state,
-        owners: action.payload,
+        owners: action.owners,
       };
-    case FETCH_ACTIVE_PATIENTS:
+    case types.FETCH_ACTIVE_PATIENTS_SUCCESS:
       return {
         ...state,
-        patients: action.payload,
+        patients: action.patients,
       };
     default:
       return state;

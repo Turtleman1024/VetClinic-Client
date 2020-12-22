@@ -1,16 +1,19 @@
 import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
+import createSagaMiddleware from 'redux-saga';
 import rootReducer from '../reducers';
+import rootSaga from '../sagas';
 
 const initialState = {};
 
-const middleware = [thunk];
+const sagaMiddleware = createSagaMiddleware();
 
 const store = createStore(
   rootReducer,
   initialState,
-  applyMiddleware(...middleware)
+  applyMiddleware(sagaMiddleware)
 );
+
+sagaMiddleware.run(rootSaga);
 
 if (process.env.NODE_ENV !== 'production') {
   window.store = store;

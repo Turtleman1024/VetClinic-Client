@@ -1,9 +1,7 @@
-import { FETCH_ACTIVE_PATIENTS } from './types';
+import * as types from './types';
 
-export const fetchActivePatients = () => (dispatch) => {
-  fetch('https://localhost:44368/api/v1/patients/active')
-    .then((response) => response.json())
-    .then((patients) =>
-      dispatch({ type: FETCH_ACTIVE_PATIENTS, payload: patients })
-    );
-};
+export function fetchActivePatients() {
+  return { type: types.FETCH_ACTIVE_PATIENTS_START };
+}
+
+export default fetchActivePatients;

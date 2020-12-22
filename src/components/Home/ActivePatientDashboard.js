@@ -1,62 +1,52 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { fetchActivePatients } from '../../actions/patients';
-import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
 import { Container, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { Label } from 'office-ui-fabric-react';
+import { useDispatch, useSelector } from 'react-redux';
+import * as actions from '../../actions/patients';
 
-export class ActivePatientDashboard extends Component {
-  componentDidMount() {
-    this.props.fetchActivePatients();
-  }
+const ActivePatientDashboard = () => {
+  const dispatch = useDispatch();
+  const patients = useSelector((state) => state.vetClinic.patients) || [];
 
-  render() {
-    return (
-      <div>
-        <Container className='p-3 my-3 border'>
-          <Label style={{ fontSize: 'xx-large' }}>Active Patients</Label>
-          <Table striped bordered hover variant='light'>
-            <thead style={{ backgroundColor: '#0984e3' }}>
-              <tr>
-                <th>Id</th>
-                <th>Patient Name</th>
-                <th>Patient Species</th>
-                <th>Patient Gender</th>
+  useEffect(() => {
+    dispatch(actions.fetchActivePatients());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return (
+    <div>
+      <Container className='p-3 my-3 border'>
+        <Label style={{ fontSize: 'xx-large' }}>Active Patients</Label>
+        <Table striped bordered hover variant='light'>
+          <thead style={{ backgroundColor: '#0984e3' }}>
+            <tr>
+              <th>Id</th>
+              <th>Patient Name</th>
+              <th>Patient Species</th>
+              <th>Patient Gender</th>
+            </tr>
+          </thead>
+          <tbody>
+            {patients.map((patient) => (
+              <tr key={patient.patientId}>
+                <td>
+                  <Link to={'/patient/' + patient.patientId}>
+                    {patient.patientId}
+                  </Link>
+                </td>
+                <td>{patient.patientName}</td>
+                <td>{patient.patientSpecies}</td>
+                <td>{patient.patientGender}</td>
               </tr>
-            </thead>
-            <tbody>
-              {this.props.patients.map((patient) => (
-                <tr key={patient.patientId}>
-                  <td>
-                    <Link to={'/patient/' + patient.patientId}>
-                      {patient.patientId}
-                    </Link>
-                  </td>
-                  <td>{patient.patientName}</td>
-                  <td>{patient.patientSpecies}</td>
-                  <td>{patient.patientGender}</td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        </Container>
-      </div>
-    );
-  }
-}
-
-ActivePatientDashboard.propTypes = {
-  fetchActivePatients: PropTypes.func.isRequired,
-  patients: PropTypes.array.isRequired,
+            ))}
+          </tbody>
+        </Table>
+      </Container>
+    </div>
+  );
 };
 
-const maptStateToProps = (state) => {
-  return {
-    patients: state.vetClinic.patients,
-  };
-};
+ActivePatientDashboard.propTypes = {};
 
-export default connect(maptStateToProps, { fetchActivePatients })(
-  ActivePatientDashboard
-);
+export default ActivePatientDashboard;
