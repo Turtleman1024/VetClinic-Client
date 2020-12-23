@@ -24,27 +24,10 @@ const Owner = () => {
     setState(owner);
   }, [owner]);
 
-  const patchData = async (id, data) => {
-    try {
-      const res = await fetch('https://localhost:44368/api/v1/owner/' + id, {
-        method: 'PATCH',
-        body: JSON.stringify(data),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      return res;
-    } catch (err) {
-      return console.log(err);
-    }
-  };
-
   const onBlur = (name, value) => {
     setState({ ...state, [name]: value });
 
-    patchData(state.ownerId, [
-      { op: 'replace', path: `/${name}`, value: value },
-    ]);
+    dispatch(actions.updateOwnerById(ownerId, name, value));
   };
 
   const onChange = (name, value) => {

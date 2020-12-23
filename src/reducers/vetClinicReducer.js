@@ -20,6 +20,11 @@ export default function (state = initialState, action) {
         currentOwner: action.owner,
       };
     }
+    case types.UPDATE_OWNER_SUCCESS:
+      return {
+        ...state,
+        currentOwner: action.owner,
+      };
     case types.FETCH_ACTIVE_PATIENTS_SUCCESS:
       return {
         ...state,

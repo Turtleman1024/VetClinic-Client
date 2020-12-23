@@ -8,4 +8,12 @@ export function fetchOwnerById(ownerId) {
   return { type: types.FETCH_OWNER_START, ownerId: ownerId };
 }
 
+export function updateOwnerById(ownerId, field, value) {
+  return {
+    type: types.UPDATE_OWNER_START,
+    ownerId,
+    patchData: [{ op: 'replace', path: `/${field}`, value: value }],
+  };
+}
+
 export default fetchOwners;
