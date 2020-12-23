@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   ActionButton,
   Checkbox,
@@ -7,14 +9,16 @@ import {
   Stack,
   TextField,
 } from 'office-ui-fabric-react';
-import { useParams, useHistory } from 'react-router-dom';
+import * as actions from '../../actions/patients';
 
 import './forms.css';
 
 const Patient = () => {
   const { patientId } = useParams();
-  const [state, setState] = useState(null);
   const history = useHistory();
+  const dispatch = useDispatch();
+  const patient = useSelector((state) => state.vetClinic.currentPatient) || {};
+  const [state, setState] = useState(patient);
   const genderOptions = [
     { key: 'M', text: 'Male' },
     { key: 'F', text: 'Female' },
@@ -22,13 +26,14 @@ const Patient = () => {
 
   useEffect(() => {
     if (patientId) {
-      fetch('https://localhost:44368/api/v1/patient/id/' + patientId)
-        .then((response) => response.json())
-        .then((patient) => setState(patient))
-        .catch((err) => console.log(err));
+      dispatch(actions.fetchPatientById(patientId));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    setState(patient);
+  }, [patient]);
 
   const onChange = (name, value) => {
     setState({ ...state, [name]: value });
@@ -106,7 +111,7 @@ const Patient = () => {
               className='input-field'
               name='patientName'
               type='text'
-              value={state.patientName}
+              value={state.patientName || ''}
               label="Patient's Name"
               placeholder="Enter Patient's Name"
               onChange={(e) => onChange(e.target.name, e.target.value)}
@@ -116,7 +121,7 @@ const Patient = () => {
               className='input-field'
               name='patientSpecies'
               type='text'
-              value={state.patientSpecies}
+              value={state.patientSpecies || ''}
               label="Patient's Species"
               placeholder="Enter Patient's Species"
               onChange={(e) => onChange(e.target.name, e.target.value)}
@@ -137,9 +142,10 @@ const Patient = () => {
               className='input-field'
               name='patientBirthDate'
               type='text'
-              value={new Date(state.patientBirthDate).toLocaleDateString(
-                'en-US'
-              )}
+              value={
+                new Date(state.patientBirthDate).toLocaleDateString('en-US') ||
+                ''
+              }
               label="Patient's Birth Date"
               placeholder="Enter Patient's Birth Date"
               onChange={(e) => onChange(e.target.name, e.target.value)}
@@ -149,7 +155,7 @@ const Patient = () => {
           <TextField
             name='patientNotes'
             type='text'
-            value={state.patientNotes}
+            value={state.patientNotes || ''}
             label='Patient Notes'
             placeholder="Enter Patient's Notes"
             onChange={(e) => onChange(e.target.name, e.target.value)}

@@ -25,6 +25,11 @@ export default function (state = initialState, action) {
         ...state,
         patients: action.patients,
       };
+    case types.FETCH_PATIENT_SUCCESS:
+      return {
+        ...state,
+        currentPatient: action.patient,
+      };
     default:
       return state;
   }

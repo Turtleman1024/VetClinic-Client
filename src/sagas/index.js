@@ -22,8 +22,16 @@ export function* fetchPatients() {
   yield put({ type: types.FETCH_ACTIVE_PATIENTS_SUCCESS, patients: data });
 }
 
+export function* fetchPatientById(action) {
+  const endpoint = `https://localhost:44368/api/v1/patient/id/${action.patientId}`;
+  const response = yield call(fetch, endpoint);
+  const data = yield response.json();
+  yield put({ type: types.FETCH_PATIENT_SUCCESS, patient: data });
+}
+
 export default function* rootSaga() {
   yield takeEvery(types.FETCH_OWNERS_START, fetchOwners);
   yield takeEvery(types.FETCH_ACTIVE_PATIENTS_START, fetchPatients);
   yield takeEvery(types.FETCH_OWNER_START, fetchOwnerById);
+  yield takeEvery(types.FETCH_PATIENT_START, fetchPatientById);
 }
