@@ -35,6 +35,11 @@ export default function (state = initialState, action) {
         ...state,
         currentPatient: action.patient,
       };
+    case types.UPDATE_PATIENT_SUCCESS:
+      return {
+        ...state,
+        currentPatient: action.patient,
+      };
     default:
       return state;
   }

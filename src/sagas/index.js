@@ -46,10 +46,28 @@ export function* updateOwner(action) {
   });
 }
 
+export function* updatePatient(action) {
+  const endpoint = `https://localhost:44368/api/v1/patient/${action.patientId}`;
+  const response = yield fetch(endpoint, {
+    method: 'PATCH',
+    body: JSON.stringify(action.patchData),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  const data = yield response.json();
+  yield put({
+    type: types.UPDATE_PATIENT_SUCCESS,
+    patientId: action.patientId,
+    patient: data,
+  });
+}
+
 export default function* rootSaga() {
   yield takeEvery(types.FETCH_OWNERS_START, fetchOwners);
   yield takeEvery(types.FETCH_ACTIVE_PATIENTS_START, fetchPatients);
   yield takeEvery(types.FETCH_OWNER_START, fetchOwnerById);
   yield takeEvery(types.FETCH_PATIENT_START, fetchPatientById);
   yield takeEvery(types.UPDATE_OWNER_START, updateOwner);
+  yield takeEvery(types.UPDATE_PATIENT_START, updatePatient);
 }

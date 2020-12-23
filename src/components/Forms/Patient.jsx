@@ -44,9 +44,7 @@ const Patient = () => {
   const onBlur = (name, value) => {
     setState({ ...state, [name]: value });
 
-    patchData(state.patientId, [
-      { op: 'replace', path: `/${name}`, value: value },
-    ]);
+    dispatch(actions.updatePatientById(patientId, name, value));
   };
 
   const onBackToOwnerClick = () => {
@@ -55,27 +53,10 @@ const Patient = () => {
     }
   };
 
-  const patchData = async (id, data) => {
-    try {
-      const res = await fetch('https://localhost:44368/api/v1/patient/' + id, {
-        method: 'PATCH',
-        body: JSON.stringify(data),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      return res;
-    } catch (err) {
-      return console.log(err);
-    }
-  };
-
   const toggleCheckbox = (name, value) => {
     setState({ ...state, [name]: value });
 
-    patchData(state.patientId, [
-      { op: 'replace', path: `/${name}`, value: value },
-    ]);
+    dispatch(actions.updatePatientById(patientId, name, value));
   };
 
   return (
