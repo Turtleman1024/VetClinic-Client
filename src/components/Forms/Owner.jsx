@@ -1,23 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { ActivityItem, Label, Stack, TextField } from 'office-ui-fabric-react';
+import * as actions from '../../actions/owners';
 
 import './forms.css';
 
 const Owner = () => {
   const { ownerId } = useParams();
-  const [state, setState] = useState(null);
+  const dispatch = useDispatch();
+  const owner = useSelector((state) => state.vetClinic.currentOwner) || {};
+  const [state, setState] = useState(owner);
 
   useEffect(() => {
     if (ownerId) {
-      fetch('https://localhost:44368/api/v1/owner/id/' + ownerId)
-        .then((response) => response.json())
-        .then((owner) => setState(owner))
-        .catch((err) => console.log(err));
+      dispatch(actions.fetchOwnerById(ownerId));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    setState(owner);
+  }, [owner]);
 
   const patchData = async (id, data) => {
     try {
@@ -75,7 +80,7 @@ const Owner = () => {
               className='input-field'
               name='ownerFirstName'
               type='text'
-              value={state.ownerFirstName}
+              value={state.ownerFirstName || ''}
               label="Owner's First Name"
               placeholder="Enter Owner's First Name"
               onChange={(e) => onChange(e.target.name, e.target.value)}
@@ -85,7 +90,7 @@ const Owner = () => {
               className='input-field'
               name='ownerLastName'
               type='text'
-              value={state.ownerLastName}
+              value={state.ownerLastName || ''}
               label="Owner's Last Name"
               placeholder="Enter Owner's Last Name"
               onChange={(e) => onChange(e.target.name, e.target.value)}
@@ -97,7 +102,7 @@ const Owner = () => {
               className='address-field'
               name='ownerAddress'
               type='text'
-              value={state.ownerAddress}
+              value={state.ownerAddress || ''}
               label="Owner's Address"
               placeholder="Enter Owner's Address"
               onChange={(e) => onChange(e.target.name, e.target.value)}
@@ -109,7 +114,7 @@ const Owner = () => {
               className='input-field'
               name='ownerCity'
               type='text'
-              value={state.ownerCity}
+              value={state.ownerCity || ''}
               label="Owner's City"
               placeholder="Enter Owner's City"
               onChange={(e) => onChange(e.target.name, e.target.value)}
@@ -119,7 +124,7 @@ const Owner = () => {
               className='input-field'
               name='ownerZip'
               type='number'
-              value={state.ownerZip}
+              value={state.ownerZip || ''}
               label="Owner's Zip"
               placeholder="Enter Owner's Zip"
               onChange={(e) => onChange(e.target.name, e.target.value)}
@@ -127,7 +132,7 @@ const Owner = () => {
             />
           </Stack>
           <Label>Owner's Pets</Label>
-          {state.ownerPets.length > 0 ? (
+          {state.ownerPets && state.ownerPets.length > 0 ? (
             <>
               {createActivityItems().map((items) => (
                 <ActivityItem key={items.key} {...items} />
