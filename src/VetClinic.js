@@ -26,7 +26,12 @@ const VetClinic = () => {
           strict
           component={OwnerDashboard}
         />
-        <Route path='/patient/:patientId' exact strict component={Patient} />
+        <Route
+          path='/owner/:ownerId/patient/:patientId'
+          exact
+          strict
+          component={Patient}
+        />
         <Route
           path='/patients-dashboard'
           exact

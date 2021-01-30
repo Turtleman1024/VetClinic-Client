@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { ActivityItem, Label, Stack, TextField } from 'office-ui-fabric-react';
+import {
+  ActivityItem,
+  ActionButton,
+  DefaultButton,
+  Label,
+  Stack,
+  TextField,
+} from 'office-ui-fabric-react';
 import * as actions from '../../actions/owners';
 
 import './forms.css';
 
 const Owner = () => {
   const { ownerId } = useParams();
+  const history = useHistory();
   const dispatch = useDispatch();
   const owner = useSelector((state) => state.vetClinic.currentOwner) || {};
   const [state, setState] = useState(owner);
@@ -41,7 +49,10 @@ const Owner = () => {
         activityItems.push({
           key: x.patientId,
           activityDescription: [
-            <Link key={x.patientId} to={`/patient/${x.patientId}`}>
+            <Link
+              key={x.patientId}
+              to={`/owner/${x.ownerId}/patient/${x.patientId}`}
+            >
               {x.patientName}
             </Link>,
           ],
@@ -55,6 +66,11 @@ const Owner = () => {
 
   return (
     <div>
+      <ActionButton
+        iconProps={{ iconName: 'Back' }}
+        text='Back to Home'
+        onClick={() => history.push('/')}
+      />
       {state && (
         <Stack className='form-container'>
           <Label style={{ fontSize: 'xx-large' }}>Owner Info</Label>
@@ -126,6 +142,11 @@ const Owner = () => {
               <strong>No Pets Found</strong>
             </div>
           )}
+          <DefaultButton
+            className='add-pet-btn'
+            href={`/owner/${owner.ownerId}/patient/0`}
+            text='Add New Pet'
+          />
         </Stack>
       )}
     </div>

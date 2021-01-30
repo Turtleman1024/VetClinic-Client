@@ -16,4 +16,11 @@ export function updatePatientById(patientId, field, value) {
   };
 }
 
+export function createNewPatient(patient) {
+  return {
+    type: types.CREATE_NEW_PATIENT_START,
+    patient: patient,
+  };
+}
+
 export default fetchActivePatients;

@@ -19,6 +19,16 @@
 }
 
 .ms-Button {
-  width: 100px;
-  margin-bottom: 4px;
+  width: 150px;
+}
+
+.ms-Button.add-pet-btn {
+  width: 150px;
+  margin-top: 10px;
+  background-color: green;
+  color: white;
+}
+
+.patient-notes-field {
+  width: 600px;
 }
