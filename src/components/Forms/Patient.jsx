@@ -6,6 +6,7 @@ import {
   DefaultButton,
   Checkbox,
   Dropdown,
+  DatePicker,
   Label,
   Stack,
   TextField,
@@ -82,7 +83,7 @@ const Patient = () => {
         <Label style={{ fontSize: 'xx-large' }}>
           {patientId === '0' ? 'New Patient Info' : 'Patient Info'}
         </Label>
-        {state.patientId && `Patient Id: ${state.patientId}`}
+        {state.patientId && <Label>{`Patient Id: ${state.patientId}`}</Label>}
         <Label>Is Patient Active</Label>
         <Stack horizontal>
           <Checkbox
@@ -132,7 +133,27 @@ const Patient = () => {
             options={genderOptions}
             onChange={(e, opt) => onChange('patientGender', opt.key)}
           />
-          <TextField
+          <DatePicker
+            className='input-field'
+            name='patientBirthDate'
+            label="Patient's Birth Date"
+            placeholder="Select Patient's Birth Date"
+            onSelectDate={(date) => onBlur('patientBirthDate', date)}
+            highlightCurrentMonth
+            highlightSelectedMonth
+            showGoToToday={false}
+            textField={{
+              value: state.patientBirthDate
+                ? new Date(state.patientBirthDate).toLocaleDateString('en-US')
+                : '',
+            }}
+            // value={
+            //   state.patientBirthDate
+            //     ? new Date(state.patientBirthDate).toLocaleDateString('en-US')
+            //     : ''
+            // }
+          />
+          {/* <TextField
             className='input-field'
             name='patientBirthDate'
             type='text'
@@ -145,7 +166,7 @@ const Patient = () => {
             placeholder="Enter Patient's Birth Date"
             onChange={(e) => onChange(e.target.name, e.target.value)}
             onBlur={(e) => onBlur(e.target.name, e.target.value)}
-          />
+          /> */}
         </Stack>
         <Stack horizontal>
           <TextField
