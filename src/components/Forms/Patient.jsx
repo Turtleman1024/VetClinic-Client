@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -7,12 +7,14 @@ import {
   Checkbox,
   Dropdown,
   DatePicker,
+  Icon,
   Label,
   Stack,
   Spinner,
   SpinnerSize,
   TextField,
 } from 'office-ui-fabric-react';
+import { useDropzone } from 'react-dropzone';
 import * as actions from '../../actions/patients';
 
 import './forms.css';
@@ -25,10 +27,26 @@ const Patient = () => {
   const patient = useSelector((state) => state.vetClinic.currentPatient);
   const [state, setState] = useState(null);
   const [isNewPatient, setIsNewPatient] = useState(true);
+  const [attachedFiles, setAttachedFiles] = useState([]);
   const genderOptions = [
     { key: 'M', text: 'Male' },
     { key: 'F', text: 'Female' },
   ];
+
+  const onDrop = useCallback((acceptedFiles) => {
+    debugger;
+    setAttachedFiles(acceptedFiles);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  console.log(attachedFiles);
+
+  const { getRootProps, getInputProps, open, acceptedFiles } = useDropzone({
+    // Disable click and keydown behavior
+    noClick: true,
+    noKeyboard: true,
+    onDrop,
+  });
 
   useEffect(() => {
     if (patientId !== '0') {
@@ -73,6 +91,12 @@ const Patient = () => {
     dispatch(actions.createNewPatient(state));
     history.push(`/owner/${ownerId}`);
   };
+
+  const files = acceptedFiles.map((file) => (
+    <li key={file.path} style={{ listStyleType: 'none' }}>
+      {file.path}
+    </li>
+  ));
 
   return (
     <div>
@@ -156,7 +180,7 @@ const Patient = () => {
                 }}
               />
             </Stack>
-            <Stack horizontal>
+            <Stack>
               <TextField
                 className='patient-notes-field'
                 name='patientNotes'
@@ -168,6 +192,30 @@ const Patient = () => {
                 rows={3}
                 multiline
               />
+              <div
+                style={{
+                  border: '1px dashed black',
+                  width: '600px',
+                  height: '150px',
+                  textAlign: 'center',
+                  paddingTop: '15px',
+                  marginTop: '20px',
+                }}
+                {...getRootProps({ className: 'dropzone' })}
+              >
+                <Stack>
+                  <input {...getInputProps()} />
+                  <Icon iconName='cloud' />
+                  <Icon iconName='upload' />
+                  <p>Drag 'n' drop some files to attach here</p>
+                  <a href='#0' onClick={open}>
+                    Browse for file to attach...
+                  </a>
+                </Stack>
+              </div>
+              <aside>
+                <ul>{files}</ul>
+              </aside>
             </Stack>
             {patientId === '0' && (
               <DefaultButton
