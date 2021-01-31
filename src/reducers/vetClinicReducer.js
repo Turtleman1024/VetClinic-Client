@@ -2,9 +2,7 @@ import * as types from '../actions/types';
 
 const initialState = {
   owners: [],
-  currentOwner: {},
   patients: [],
-  currentPatient: {},
 };
 
 export default function (state = initialState, action) {

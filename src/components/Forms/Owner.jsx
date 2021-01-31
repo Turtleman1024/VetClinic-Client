@@ -8,6 +8,8 @@ import {
   DefaultButton,
   Label,
   Stack,
+  Spinner,
+  SpinnerSize,
   TextField,
 } from 'office-ui-fabric-react';
 import * as actions from '../../actions/owners';
@@ -19,7 +21,7 @@ const Owner = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const owner = useSelector((state) => state.vetClinic.currentOwner) || {};
-  const [state, setState] = useState(owner);
+  const [state, setState] = useState(null);
 
   useEffect(() => {
     if (ownerId) {
@@ -71,83 +73,82 @@ const Owner = () => {
         text='Back to Home'
         onClick={() => history.push('/')}
       />
-      {state && (
-        <Stack className='form-container'>
-          <Label style={{ fontSize: 'xx-large' }}>Owner Info</Label>
-          <Stack horizontal>
-            <TextField
-              className='input-field'
-              name='ownerFirstName'
-              type='text'
-              value={state.ownerFirstName || ''}
-              label="Owner's First Name"
-              placeholder="Enter Owner's First Name"
-              onChange={(e) => onChange(e.target.name, e.target.value)}
-              onBlur={(e) => onBlur(e.target.name, e.target.value)}
-            />
-            <TextField
-              className='input-field'
-              name='ownerLastName'
-              type='text'
-              value={state.ownerLastName || ''}
-              label="Owner's Last Name"
-              placeholder="Enter Owner's Last Name"
-              onChange={(e) => onChange(e.target.name, e.target.value)}
-              onBlur={(e) => onBlur(e.target.name, e.target.value)}
+      {!state ? (
+        <Spinner label='Loading Owner Info...' size={SpinnerSize.large} />
+      ) : (
+        <>
+          <Stack className='form-container'>
+            <Label style={{ fontSize: 'xx-large' }}>Owner Info</Label>
+            <Stack horizontal>
+              <TextField
+                className='input-field'
+                name='ownerFirstName'
+                type='text'
+                value={state.ownerFirstName || ''}
+                label="Owner's First Name"
+                onChange={(e) => onChange(e.target.name, e.target.value)}
+                onBlur={(e) => onBlur(e.target.name, e.target.value)}
+              />
+              <TextField
+                className='input-field'
+                name='ownerLastName'
+                type='text'
+                value={state.ownerLastName || ''}
+                label="Owner's Last Name"
+                onChange={(e) => onChange(e.target.name, e.target.value)}
+                onBlur={(e) => onBlur(e.target.name, e.target.value)}
+              />
+            </Stack>
+            <Stack horizontal>
+              <TextField
+                className='address-field'
+                name='ownerAddress'
+                type='text'
+                value={state.ownerAddress || ''}
+                label="Owner's Address"
+                onChange={(e) => onChange(e.target.name, e.target.value)}
+                onBlur={(e) => onBlur(e.target.name, e.target.value)}
+              />
+            </Stack>
+            <Stack horizontal>
+              <TextField
+                className='input-field'
+                name='ownerCity'
+                type='text'
+                value={state.ownerCity || ''}
+                label="Owner's City"
+                onChange={(e) => onChange(e.target.name, e.target.value)}
+                onBlur={(e) => onBlur(e.target.name, e.target.value)}
+              />
+              <TextField
+                className='input-field'
+                name='ownerZip'
+                type='number'
+                value={state.ownerZip || ''}
+                label="Owner's Zip"
+                onChange={(e) => onChange(e.target.name, e.target.value)}
+                onBlur={(e) => onBlur(e.target.name, e.target.value)}
+              />
+            </Stack>
+            <Label>Owner's Pets</Label>
+            {state.ownerPets && state.ownerPets.length > 0 ? (
+              <>
+                {createActivityItems().map((items) => (
+                  <ActivityItem key={items.key} {...items} />
+                ))}
+              </>
+            ) : (
+              <div>
+                <strong>No Pets Found</strong>
+              </div>
+            )}
+            <DefaultButton
+              className='add-pet-btn'
+              href={`/owner/${owner.ownerId}/patient/0`}
+              text='Add New Pet'
             />
           </Stack>
-          <Stack horizontal>
-            <TextField
-              className='address-field'
-              name='ownerAddress'
-              type='text'
-              value={state.ownerAddress || ''}
-              label="Owner's Address"
-              placeholder="Enter Owner's Address"
-              onChange={(e) => onChange(e.target.name, e.target.value)}
-              onBlur={(e) => onBlur(e.target.name, e.target.value)}
-            />
-          </Stack>
-          <Stack horizontal>
-            <TextField
-              className='input-field'
-              name='ownerCity'
-              type='text'
-              value={state.ownerCity || ''}
-              label="Owner's City"
-              placeholder="Enter Owner's City"
-              onChange={(e) => onChange(e.target.name, e.target.value)}
-              onBlur={(e) => onBlur(e.target.name, e.target.value)}
-            />
-            <TextField
-              className='input-field'
-              name='ownerZip'
-              type='number'
-              value={state.ownerZip || ''}
-              label="Owner's Zip"
-              placeholder="Enter Owner's Zip"
-              onChange={(e) => onChange(e.target.name, e.target.value)}
-              onBlur={(e) => onBlur(e.target.name, e.target.value)}
-            />
-          </Stack>
-          <Label>Owner's Pets</Label>
-          {state.ownerPets && state.ownerPets.length > 0 ? (
-            <>
-              {createActivityItems().map((items) => (
-                <ActivityItem key={items.key} {...items} />
-              ))}
-            </>
-          ) : (
-            <div>
-              <strong>No Pets Found</strong>
-            </div>
-          )}
-          <DefaultButton
-            className='add-pet-btn'
-            href={`/owner/${owner.ownerId}/patient/0`}
-            text='Add New Pet'
-          />
-        </Stack>
+        </>
       )}
     </div>
   );
