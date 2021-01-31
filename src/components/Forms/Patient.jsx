@@ -147,26 +147,7 @@ const Patient = () => {
                 ? new Date(state.patientBirthDate).toLocaleDateString('en-US')
                 : '',
             }}
-            // value={
-            //   state.patientBirthDate
-            //     ? new Date(state.patientBirthDate).toLocaleDateString('en-US')
-            //     : ''
-            // }
           />
-          {/* <TextField
-            className='input-field'
-            name='patientBirthDate'
-            type='text'
-            value={
-              state.patientBirthDate
-                ? new Date(state.patientBirthDate).toLocaleDateString('en-US')
-                : ''
-            }
-            label="Patient's Birth Date"
-            placeholder="Enter Patient's Birth Date"
-            onChange={(e) => onChange(e.target.name, e.target.value)}
-            onBlur={(e) => onBlur(e.target.name, e.target.value)}
-          /> */}
         </Stack>
         <Stack horizontal>
           <TextField
