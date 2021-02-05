@@ -31,7 +31,9 @@ const ActivePatientDashboard = () => {
             {patients.map((patient) => (
               <tr key={patient.patientId}>
                 <td>
-                  <Link to={'/patient/' + patient.patientId}>
+                  <Link
+                    to={`owner/${patient.ownerId}/patient/${patient.patientId}`}
+                  >
                     {patient.patientId}
                   </Link>
                 </td>
