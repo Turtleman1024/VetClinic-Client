@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -33,15 +33,11 @@ const Patient = () => {
     { key: 'F', text: 'Female' },
   ];
 
-  const onDrop = useCallback((acceptedFiles) => {
-    debugger;
-    setAttachedFiles(acceptedFiles);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const onDrop = (acceptedFiles) => {
+    setAttachedFiles([...attachedFiles, ...acceptedFiles]);
+  };
 
-  console.log(attachedFiles);
-
-  const { getRootProps, getInputProps, open, acceptedFiles } = useDropzone({
+  const { getRootProps, getInputProps, open } = useDropzone({
     // Disable click and keydown behavior
     noClick: true,
     noKeyboard: true,
@@ -92,10 +88,8 @@ const Patient = () => {
     history.push(`/owner/${ownerId}`);
   };
 
-  const files = acceptedFiles.map((file) => (
-    <li key={file.path} style={{ listStyleType: 'none' }}>
-      {file.path}
-    </li>
+  const files = attachedFiles.map((file) => (
+    <li key={file.path}>{file.path}</li>
   ));
 
   return (
@@ -192,6 +186,12 @@ const Patient = () => {
                 rows={3}
                 multiline
               />
+              <Stack>
+                <Label>Attached Files</Label>
+                <ul style={{ listStyleType: 'none', paddingLeft: '0px' }}>
+                  {files}
+                </ul>
+              </Stack>
               <div
                 style={{
                   border: '1px dashed black',
@@ -213,9 +213,6 @@ const Patient = () => {
                   </a>
                 </Stack>
               </div>
-              <aside>
-                <ul>{files}</ul>
-              </aside>
             </Stack>
             {patientId === '0' && (
               <DefaultButton
@@ -224,7 +221,7 @@ const Patient = () => {
                 onClick={onAddPatientClick}
               />
             )}
-          </Stack>{' '}
+          </Stack>
         </>
       )}
     </div>
