@@ -32,7 +32,7 @@ const ActivePatientDashboard = () => {
               <tr key={patient.patientId}>
                 <td>
                   <Link
-                    to={`owner/${patient.ownerId}/patient/${patient.patientId}`}
+                    to={`/owner/${patient.ownerId}/patient/${patient.patientId}`}
                   >
                     {patient.patientId}
                   </Link>
