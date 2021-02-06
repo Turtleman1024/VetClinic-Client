@@ -32,8 +32,25 @@ export function* updateOwner(action) {
   });
 }
 
+export function* deletePet(action) {
+  const endpoint = `https://localhost:44368/api/v1/patient/remove?patientId=${action.patientId}`;
+  const response = yield fetch(endpoint, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  //const data = yield response.json();
+  yield put({
+    type: types.DELETE_OWNER_PET_SUCCESS,
+    patientId: action.patientId,
+  });
+}
+
 export default function* ownerSaga() {
   yield takeEvery(types.FETCH_OWNERS_START, fetchOwners);
   yield takeEvery(types.FETCH_OWNER_START, fetchOwnerById);
   yield takeEvery(types.UPDATE_OWNER_START, updateOwner);
+  yield takeEvery(types.DELETE_OWNER_PET_START, deletePet);
 }

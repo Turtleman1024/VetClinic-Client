@@ -3,7 +3,6 @@ import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
-  ActivityItem,
   ActionButton,
   DefaultButton,
   Label,
@@ -20,11 +19,11 @@ const Owner = () => {
   const { ownerId } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
-  const owner = useSelector((state) => state.vetClinic.currentOwner) || {};
+  const owner = useSelector((state) => state.vetClinic.currentOwner);
   const [state, setState] = useState(null);
 
   useEffect(() => {
-    if (ownerId) {
+    if (!owner) {
       dispatch(actions.fetchOwnerById(ownerId));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -42,28 +41,6 @@ const Owner = () => {
 
   const onChange = (name, value) => {
     setState({ ...state, [name]: value });
-  };
-
-  const createActivityItems = () => {
-    let activityItems = [];
-    if (state.ownerPets.length > 0) {
-      state.ownerPets.map((x) =>
-        activityItems.push({
-          key: x.patientId,
-          activityDescription: [
-            <Link
-              key={x.patientId}
-              to={`/owner/${x.ownerId}/patient/${x.patientId}`}
-            >
-              {x.patientName}
-            </Link>,
-          ],
-        })
-      );
-      return activityItems;
-    }
-
-    return activityItems;
   };
 
   return (
@@ -130,18 +107,44 @@ const Owner = () => {
                 onBlur={(e) => onBlur(e.target.name, e.target.value)}
               />
             </Stack>
-            <Label>Owner's Pets</Label>
-            {state.ownerPets && state.ownerPets.length > 0 ? (
-              <>
-                {createActivityItems().map((items) => (
-                  <ActivityItem key={items.key} {...items} />
-                ))}
-              </>
-            ) : (
-              <div>
-                <strong>No Pets Found</strong>
-              </div>
-            )}
+            <table>
+              <thead>
+                <tr>
+                  <th>
+                    <Label>Owner's Pets</Label>
+                  </th>
+                  <th />
+                </tr>
+              </thead>
+              <tbody>
+                {state.ownerPets && state.ownerPets.length > 0 ? (
+                  state.ownerPets.map((x) => (
+                    <tr key={x.patientId}>
+                      <td>
+                        <Link
+                          key={x.patientId}
+                          to={`/owner/${x.ownerId}/patient/${x.patientId}`}
+                        >
+                          {x.patientName}
+                        </Link>
+                      </td>
+                      <td>
+                        <ActionButton
+                          iconProps={{ iconName: 'trash' }}
+                          onClick={() =>
+                            dispatch(actions.deleteOwnerPet(x.patientId))
+                          }
+                        />
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td>No Pets Found</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
             <DefaultButton
               className='add-pet-btn'
               href={`/owner/${owner.ownerId}/patient/0`}

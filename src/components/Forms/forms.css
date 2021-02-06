@@ -25,10 +25,19 @@
 .ms-Button.add-pet-btn {
   width: 150px;
   margin-top: 10px;
-  background-color: green;
-  color: white;
+  background-color: #38ae5f;
 }
 
 .patient-notes-field {
   width: 600px;
+}
+
+.ms-Button.cancel-btn {
+  width: 150px;
+  margin-top: 10px;
+  background-color: lightgrey;
+}
+
+.add-pet-btn + .cancel-btn {
+  margin-left: 24px;
 }

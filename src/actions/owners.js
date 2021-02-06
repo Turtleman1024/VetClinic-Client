@@ -16,4 +16,11 @@ export function updateOwnerById(ownerId, field, value) {
   };
 }
 
+export function deleteOwnerPet(patientId) {
+  return {
+    type: types.DELETE_OWNER_PET_START,
+    patientId: patientId,
+  };
+}
+
 export default fetchOwners;

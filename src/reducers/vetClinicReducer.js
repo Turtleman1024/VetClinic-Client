@@ -38,6 +38,28 @@ export default function (state = initialState, action) {
         ...state,
         currentPatient: action.patient,
       };
+    case types.CREATE_NEW_PATIENT_SUCCESS: {
+      return {
+        ...state,
+        currentOwner: {
+          ...state.currentOwner,
+          ownerPets: [...state.currentOwner.ownerPets, action.patient],
+        },
+      };
+    }
+    case types.DELETE_OWNER_PET_SUCCESS: {
+      return {
+        ...state,
+        currentOwner: {
+          ...state.currentOwner,
+          ownerPets: [
+            ...state.currentOwner.ownerPets.filter(
+              (x) => x.patientId !== action.patientId
+            ),
+          ],
+        },
+      };
+    }
     default:
       return state;
   }

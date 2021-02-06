@@ -31,7 +31,14 @@ const OwnerDashboard = () => {
             {owners.map((owner) => (
               <tr key={owner.ownerId}>
                 <td>
-                  <Link to={'/owner/' + owner.ownerId}>{owner.ownerId}</Link>
+                  <Link
+                    to={`/owner/${owner.ownerId}`}
+                    onClick={() =>
+                      dispatch(actions.fetchOwnerById(owner.ownerId))
+                    }
+                  >
+                    {owner.ownerId}
+                  </Link>
                 </td>
                 <td>{owner.ownerFirstName}</td>
                 <td>{owner.ownerLastName}</td>

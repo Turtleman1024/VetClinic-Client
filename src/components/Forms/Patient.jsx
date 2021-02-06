@@ -170,11 +170,18 @@ const Patient = () => {
               />
             </Stack>
             {patientId === '0' && (
-              <DefaultButton
-                className='add-pet-btn'
-                text='Add Patient'
-                onClick={onAddPatientClick}
-              />
+              <Stack horizontal>
+                <DefaultButton
+                  className='add-pet-btn'
+                  text='Add Patient'
+                  onClick={onAddPatientClick}
+                />
+                <DefaultButton
+                  className='cancel-btn'
+                  text='Cancel'
+                  onClick={onAddPatientClick}
+                />
+              </Stack>
             )}
           </Stack>{' '}
         </>

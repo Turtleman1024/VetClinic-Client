@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import ToastifyNotification from '../core/ToastifyNotification';
 import { Container, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { TextField } from 'office-ui-fabric-react';
+import * as actions from '../../actions/owners';
 
 const Home = () => {
+  const dispatch = useDispatch();
   const [searchValue, setSearchValue] = useState('');
   const [searchResults, setSearchResults] = useState([]);
 
@@ -62,7 +65,14 @@ const Home = () => {
               {searchResults.map((owner) => (
                 <tr key={owner.ownerId}>
                   <td>
-                    <Link to={`/owner/${owner.ownerId}`}>{owner.ownerId}</Link>
+                    <Link
+                      to={`/owner/${owner.ownerId}`}
+                      onClick={() =>
+                        dispatch(actions.fetchOwnerById(owner.ownerId))
+                      }
+                    >
+                      {owner.ownerId}
+                    </Link>
                   </td>
                   <td>{owner.ownerFirstName}</td>
                   <td>{owner.ownerLastName}</td>
