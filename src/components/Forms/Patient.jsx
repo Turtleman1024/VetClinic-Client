@@ -55,7 +55,6 @@ const Patient = () => {
   };
 
   const onBlur = (name, value) => {
-    debugger;
     setState({ ...state, [name]: value });
     if (!isNewPatient && value) {
       dispatch(actions.updatePatientById(patientId, name, value));
