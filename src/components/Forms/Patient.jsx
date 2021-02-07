@@ -14,6 +14,7 @@ import {
   TextField,
 } from 'office-ui-fabric-react';
 import * as actions from '../../actions/patients';
+import * as ownerActions from '../../actions/owners';
 
 import './forms.css';
 
@@ -33,14 +34,19 @@ const Patient = () => {
   useEffect(() => {
     if (patientId !== '0') {
       dispatch(actions.fetchPatientById(patientId));
+      dispatch(ownerActions.fetchOwnerById(ownerId));
       setIsNewPatient(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    setState({ ...patient, ownerId: ownerId });
-  }, [patient, ownerId]);
+    setState({
+      ...patient,
+      ...(patientId === '0' && { isActive: true }),
+      ownerId: ownerId,
+    });
+  }, [patient, ownerId, patientId]);
 
   const onChange = (name, value) => {
     setState({ ...state, [name]: value });
@@ -50,7 +56,7 @@ const Patient = () => {
 
   const onBlur = (name, value) => {
     setState({ ...state, [name]: value });
-    if (!isNewPatient) {
+    if (!isNewPatient && value) {
       dispatch(actions.updatePatientById(patientId, name, value));
     }
   };
@@ -69,9 +75,33 @@ const Patient = () => {
   };
 
   const onAddPatientClick = () => {
-    //TODO: Add Field Validation
-    dispatch(actions.createNewPatient(state));
-    history.push(`/owner/${ownerId}`);
+    const isValid = validateNewPatientFields();
+    if (isValid) {
+      dispatch(actions.createNewPatient(state));
+      history.push(`/owner/${ownerId}`);
+    }
+  };
+
+  const validateNewPatientFields = () => {
+    const invalidFields = [];
+    Object.keys(state).forEach((key) => {
+      if (!state[key] && key !== 'isActive') {
+        invalidFields.push(key);
+      }
+    });
+
+    if (Object.keys(state).length === 7 && invalidFields.length === 0) {
+      return true;
+    }
+    return false;
+  };
+
+  const getErrorMessage = (fieldName, errorMessage) => {
+    if (Object.keys(state).some((key) => key === fieldName && state[key])) {
+      return '';
+    } else {
+      return errorMessage;
+    }
   };
 
   return (
@@ -119,6 +149,11 @@ const Patient = () => {
                 label="Patient's Name"
                 onChange={(e) => onChange(e.target.name, e.target.value)}
                 onBlur={(e) => onBlur(e.target.name, e.target.value)}
+                errorMessage={getErrorMessage(
+                  'patientName',
+                  'Name must be provided'
+                )}
+                required
               />
               <TextField
                 className='input-field'
@@ -128,6 +163,11 @@ const Patient = () => {
                 label="Patient's Species"
                 onChange={(e) => onChange(e.target.name, e.target.value)}
                 onBlur={(e) => onBlur(e.target.name, e.target.value)}
+                errorMessage={getErrorMessage(
+                  'patientSpecies',
+                  'Species must be provided'
+                )}
+                required
               />
             </Stack>
             <Stack horizontal>
@@ -136,8 +176,14 @@ const Patient = () => {
                 name='patientGender'
                 selectedKey={state.patientGender}
                 label="Patient's Gender"
+                placeholder='Select a gender'
                 options={genderOptions}
                 onChange={(e, opt) => onChange('patientGender', opt.key)}
+                errorMessage={getErrorMessage(
+                  'patientGender',
+                  'Gender must be provided'
+                )}
+                required
               />
               <DatePicker
                 className='input-field'
@@ -154,6 +200,7 @@ const Patient = () => {
                       )
                     : '',
                 }}
+                isRequired
               />
             </Stack>
             <Stack horizontal>
@@ -163,10 +210,16 @@ const Patient = () => {
                 type='text'
                 value={state.patientNotes || ''}
                 label='Patient Notes'
+                placeholder='Please enter pertinent patient info'
                 onChange={(e) => onChange(e.target.name, e.target.value)}
                 onBlur={(e) => onBlur(e.target.name, e.target.value)}
                 rows={3}
+                errorMessage={getErrorMessage(
+                  'patientNotes',
+                  'Patient Notes must be provided'
+                )}
                 multiline
+                required
               />
             </Stack>
             {patientId === '0' && (
@@ -179,7 +232,7 @@ const Patient = () => {
                 <DefaultButton
                   className='cancel-btn'
                   text='Cancel'
-                  onClick={onAddPatientClick}
+                  onClick={onBackToOwnerClick}
                 />
               </Stack>
             )}
