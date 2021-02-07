@@ -34,8 +34,19 @@ export default function (state = initialState, action) {
         currentPatient: action.patient,
       };
     case types.UPDATE_PATIENT_SUCCESS:
+      const ownerPetIndex = state.currentOwner.ownerPets.findIndex(
+        (x) => x.patientId === action.patient.patientId
+      );
       return {
         ...state,
+        currentOwner: {
+          ...state.currentOwner,
+          ownerPets: [
+            ...state.currentOwner.ownerPets.slice(0, ownerPetIndex),
+            action.patient,
+            ...state.currentOwner.ownerPets.slice(ownerPetIndex + 1),
+          ],
+        },
         currentPatient: action.patient,
       };
     case types.CREATE_NEW_PATIENT_SUCCESS: {
