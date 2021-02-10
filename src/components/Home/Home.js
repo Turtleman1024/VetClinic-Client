@@ -81,7 +81,9 @@ const Home = () => {
                       ? owner.ownerPets.map((x) => (
                           <div key={x.patientId}>
                             {
-                              <Link to={`/patient/${x.patientId}`}>
+                              <Link
+                                to={`/owner/${x.ownerId}/patient/${x.patientId}`}
+                              >
                                 {x.patientName}
                               </Link>
                             }

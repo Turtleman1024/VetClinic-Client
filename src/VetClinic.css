@@ -8,3 +8,24 @@
 .home-title {
   margin-left: 12px;
 }
+
+div.bg_image {
+  background: url('./assets/404ErrorImage.png') no-repeat center;
+  background-size: 600px 350px;
+  height: 400px;
+}
+
+div.fourOfour-container {
+  color: black;
+  font-size: 100px;
+  text-align: center;
+}
+
+span.fourOfour-subtitle-container {
+  font-size: 50px;
+}
+
+div.link {
+  text-align: center;
+  font-size: 20px;
+}
