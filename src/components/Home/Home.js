@@ -1,16 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import ToastifyNotification from '../core/ToastifyNotification';
 import { Container, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { TextField } from 'office-ui-fabric-react';
+import { ActionButton, TextField, ComboBox } from 'office-ui-fabric-react';
 import * as actions from '../../actions/owners';
 
 const Home = () => {
   const dispatch = useDispatch();
   const [searchValue, setSearchValue] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+  const [propsOptions, setPropsOptions] = useState([
+    { id: 500, text: 'Building' },
+    { id: 550, text: 'Electronic' },
+  ]);
+  const [optionsSelected, setOptionsSelected] = useState([]);
+  const [options, setOptions] = useState([]);
+
+  useEffect(() => {
+    setOptions([
+      ...propsOptions.map((x) => ({ key: x.id, text: `${x.id} - ${x.text}` })),
+    ]);
+  }, [propsOptions]);
 
   const onBlur = (name, value) => {
     setSearchValue(value);
@@ -33,6 +45,21 @@ const Home = () => {
     toast[type](<ToastifyNotification title={title} notificationBody={body} />);
   };
 
+  const onComboxChange = (opt) => {
+    setOptionsSelected([...optionsSelected, opt.key]);
+    setOptions([...options.filter((x) => x.key !== opt.key)]);
+  };
+
+  const onAssetTypeChoiseDelete = (key) => {
+    setOptionsSelected(optionsSelected.filter((x) => x !== key));
+    const temp = propsOptions.find((x) => x.id === key);
+    setOptions(
+      [...options, { key: key, text: `${temp.id} - ${temp.text}` }].sort(
+        (a, b) => a.key - b.key
+      )
+    );
+  };
+
   return (
     <div>
       <h1 className='home-title'>Welcome to Home Page</h1>
@@ -46,6 +73,25 @@ const Home = () => {
         onChange={(e) => onChange(e.target.name, e.target.value)}
         onBlur={(e) => onBlur(e.target.name, e.target.value)}
       />
+      <ComboBox
+        className='combo-box-container'
+        placeholder='Search for Asset'
+        label='Asset Type'
+        autoComplete='on'
+        allowFreeform={true}
+        options={options}
+        onChange={(e, opt) => onComboxChange(opt)}
+      />
+      {optionsSelected.length > 0 &&
+        optionsSelected.map((x) => (
+          <div>
+            {x}
+            <ActionButton
+              iconProps={{ iconName: 'Delete' }}
+              onClick={() => onAssetTypeChoiseDelete(x)}
+            />
+          </div>
+        ))}
       {searchResults.length > 0 && (
         <Container className='p-3 my-3 border'>
           <Table striped bordered hover variant='light'>
