@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@fluentui/react": "^7.153.2",
+    "@reduxjs/toolkit": "^1.9.5",
     "bootstrap": "^4.4.1",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.0",
