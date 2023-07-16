@@ -1,18 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  ActionButton,
-  DefaultButton,
-  Checkbox,
-  Dropdown,
-  DatePicker,
-  Label,
-  Stack,
-  Spinner,
-  SpinnerSize,
-  TextField,
-} from 'office-ui-fabric-react';
+import { ActionButton, DefaultButton, Checkbox, Dropdown, DatePicker, Label, Stack, Spinner, SpinnerSize, TextField } from 'office-ui-fabric-react';
 import * as actions from '../../actions/patients';
 import * as ownerActions from '../../actions/owners';
 
@@ -23,6 +12,7 @@ const Patient = () => {
   const { ownerId } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
+  const isMounted = useRef(false);
   const patient = useSelector((state) => state.vetClinic.currentPatient);
   const [state, setState] = useState(null);
   const [isNewPatient, setIsNewPatient] = useState(true);
@@ -36,6 +26,7 @@ const Patient = () => {
       dispatch(actions.fetchPatientById(patientId));
       dispatch(ownerActions.fetchOwnerById(ownerId));
       setIsNewPatient(false);
+      isMounted.current = true;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -97,7 +88,7 @@ const Patient = () => {
   };
 
   const getErrorMessage = (fieldName, errorMessage) => {
-    if (Object.keys(state).some((key) => key === fieldName && state[key])) {
+    if (isMounted.current && Object.keys(state).some((key) => key === fieldName && state[key])) {
       return '';
     } else {
       return errorMessage;
@@ -106,134 +97,88 @@ const Patient = () => {
 
   return (
     <div>
-      <ActionButton
-        iconProps={{ iconName: 'Back' }}
-        text='Back to Owner'
-        onClick={onBackToOwnerClick}
-      />
+      <ActionButton iconProps={{ iconName: 'Back' }} text="Back to Owner" onClick={onBackToOwnerClick} />
       {!state ? (
-        <Spinner label='Loading Patient Info...' size={SpinnerSize.large} />
+        <Spinner label="Loading Patient Info..." size={SpinnerSize.large} />
       ) : (
         <>
-          <Stack className='form-container'>
-            <Label style={{ fontSize: 'xx-large' }}>
-              {patientId === '0' ? 'New Patient Info' : 'Patient Info'}
-            </Label>
+          <Stack className="form-container">
+            <Label style={{ fontSize: 'xx-large' }}>{patientId === '0' ? 'New Patient Info' : 'Patient Info'}</Label>
             <Label>Is Patient Active</Label>
             <Stack horizontal>
-              <Checkbox
-                className='checkbox'
-                name='isActive'
-                label='Yes'
-                checked={state.isActive}
-                onChange={(e) =>
-                  toggleCheckbox(e.target.name, e.target.checked)
-                }
-              />
-              <Checkbox
-                className='checkbox'
-                name='isActive'
-                label='No'
-                checked={!state.isActive}
-                onChange={(e) =>
-                  toggleCheckbox(e.target.name, !e.target.checked)
-                }
-              />
+              <Checkbox className="checkbox" name="isActive" label="Yes" checked={state.isActive} onChange={(e) => toggleCheckbox(e.target.name, e.target.checked)} />
+              <Checkbox className="checkbox" name="isActive" label="No" checked={!state.isActive} onChange={(e) => toggleCheckbox(e.target.name, !e.target.checked)} />
             </Stack>
             <Stack horizontal>
               <TextField
-                className='input-field'
-                name='patientName'
-                type='text'
+                className="input-field"
+                name="patientName"
+                type="text"
                 value={state.patientName || ''}
                 label="Patient's Name"
                 onChange={(e) => onChange(e.target.name, e.target.value)}
                 onBlur={(e) => onBlur(e.target.name, e.target.value)}
-                errorMessage={getErrorMessage(
-                  'patientName',
-                  'Name must be provided'
-                )}
+                errorMessage={getErrorMessage('patientName', 'Name must be provided')}
                 required
               />
               <TextField
-                className='input-field'
-                name='patientSpecies'
-                type='text'
+                className="input-field"
+                name="patientSpecies"
+                type="text"
                 value={state.patientSpecies || ''}
                 label="Patient's Species"
                 onChange={(e) => onChange(e.target.name, e.target.value)}
                 onBlur={(e) => onBlur(e.target.name, e.target.value)}
-                errorMessage={getErrorMessage(
-                  'patientSpecies',
-                  'Species must be provided'
-                )}
+                errorMessage={getErrorMessage('patientSpecies', 'Species must be provided')}
                 required
               />
             </Stack>
             <Stack horizontal>
               <Dropdown
-                className='input-field'
-                name='patientGender'
+                className="input-field"
+                name="patientGender"
                 selectedKey={state.patientGender}
                 label="Patient's Gender"
-                placeholder='Select a gender'
+                placeholder="Select a gender"
                 options={genderOptions}
                 onChange={(e, opt) => onChange('patientGender', opt.key)}
-                errorMessage={getErrorMessage(
-                  'patientGender',
-                  'Gender must be provided'
-                )}
+                errorMessage={getErrorMessage('patientGender', 'Gender must be provided')}
                 required
               />
               <DatePicker
-                className='input-field'
-                name='patientBirthDate'
+                className="input-field"
+                name="patientBirthDate"
                 label="Patient's Birth Date"
                 onSelectDate={(date) => onBlur('patientBirthDate', date)}
                 highlightCurrentMonth
                 highlightSelectedMonth
                 showGoToToday={false}
                 textField={{
-                  value: state.patientBirthDate
-                    ? new Date(state.patientBirthDate).toLocaleDateString(
-                        'en-US'
-                      )
-                    : '',
+                  value: state.patientBirthDate ? new Date(state.patientBirthDate).toLocaleDateString('en-US') : '',
                 }}
                 isRequired
               />
             </Stack>
             <Stack horizontal>
               <TextField
-                className='patient-notes-field'
-                name='patientNotes'
-                type='text'
+                className="patient-notes-field"
+                name="patientNotes"
+                type="text"
                 value={state.patientNotes || ''}
-                label='Patient Notes'
-                placeholder='Please enter pertinent patient info'
+                label="Patient Notes"
+                placeholder="Please enter pertinent patient info"
                 onChange={(e) => onChange(e.target.name, e.target.value)}
                 onBlur={(e) => onBlur(e.target.name, e.target.value)}
                 rows={3}
-                errorMessage={getErrorMessage(
-                  'patientNotes',
-                  'Patient Notes must be provided'
-                )}
+                errorMessage={getErrorMessage('patientNotes', 'Patient Notes must be provided')}
                 multiline
                 required
               />
             </Stack>
             {patientId === '0' && (
               <Stack horizontal>
-                <DefaultButton
-                  className='add-pet-btn'
-                  text='Add Patient'
-                  onClick={onAddPatientClick}
-                />
-                <DefaultButton
-                  className='cancel-btn'
-                  text='Cancel'
-                  onClick={onBackToOwnerClick}
-                />
+                <DefaultButton className="add-pet-btn" text="Add Patient" onClick={onAddPatientClick} />
+                <DefaultButton className="cancel-btn" text="Cancel" onClick={onBackToOwnerClick} />
               </Stack>
             )}
           </Stack>{' '}
