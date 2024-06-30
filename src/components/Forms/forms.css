@@ -22,10 +22,12 @@
   width: 150px;
 }
 
-.ms-Button.add-pet-btn {
+.ms-Button.add-btn {
   width: 150px;
   margin-top: 10px;
+  border-radius: 8px;
   background-color: #38ae5f;
+  color:white;
 }
 
 .patient-notes-field {
@@ -38,6 +40,6 @@
   background-color: lightgrey;
 }
 
-.add-pet-btn + .cancel-btn {
+.add-btn + .cancel-btn {
   margin-left: 24px;
 }

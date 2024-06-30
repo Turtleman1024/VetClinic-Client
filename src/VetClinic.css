@@ -29,3 +29,13 @@ div.link {
   text-align: center;
   font-size: 20px;
 }
+
+.ms-Button.add-owner-btn {
+  width: 180px;
+  margin-top: 12px;
+  margin-left: 50px;
+  border-radius: 8px;
+  color: white;
+  background-color: rgb(9, 132, 227);
+  margin-top: 12px;
+}

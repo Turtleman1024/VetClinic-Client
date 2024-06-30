@@ -153,9 +153,7 @@ const Patient = () => {
                 highlightCurrentMonth
                 highlightSelectedMonth
                 showGoToToday={false}
-                textField={{
-                  value: state.patientBirthDate ? new Date(state.patientBirthDate).toLocaleDateString('en-US') : '',
-                }}
+                value={state?.patientBirthDate ? new Date(state.patientBirthDate) : ''}
                 isRequired
               />
             </Stack>
@@ -177,7 +175,7 @@ const Patient = () => {
             </Stack>
             {patientId === '0' && (
               <Stack horizontal>
-                <DefaultButton className="add-pet-btn" text="Add Patient" onClick={onAddPatientClick} />
+                <DefaultButton className="add-btn" text="Add Patient" onClick={onAddPatientClick} />
                 <DefaultButton className="cancel-btn" text="Cancel" onClick={onBackToOwnerClick} />
               </Stack>
             )}

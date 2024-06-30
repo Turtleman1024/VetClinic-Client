@@ -23,4 +23,13 @@ export function deleteOwnerPet(patientId) {
   };
 }
 
+export function createOwner(newOwner, callback) {
+  return {
+    type: types.CREATE_NEW_OWNER_START,
+    owner: newOwner,
+    callback,
+  };
+
+}
+
 export default fetchOwners;

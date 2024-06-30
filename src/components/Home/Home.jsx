@@ -4,7 +4,7 @@ import ToastifyNotification from '../core/ToastifyNotification';
 import { Container, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { TextField } from 'office-ui-fabric-react';
+import { DefaultButton, TextField } from 'office-ui-fabric-react';
 import * as actions from '../../actions/owners';
 
 const Home = () => {
@@ -36,6 +36,7 @@ const Home = () => {
   return (
     <div>
       <h1 className='home-title'>Welcome to Home Page</h1>
+      <DefaultButton className="add-owner-btn" href={`/owner/0`} text="Create New Owner" />
       <TextField
         className='search-owner'
         name='searchForOwner'

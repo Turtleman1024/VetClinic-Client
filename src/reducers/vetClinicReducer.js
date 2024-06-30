@@ -12,7 +12,8 @@ export default function (state = initialState, action) {
         ...state,
         owners: action.owners,
       };
-    case types.FETCH_OWNER_SUCCESS: {
+    case types.FETCH_OWNER_SUCCESS:
+    case types.CREATE_NEW_OWNER_SUCCESS: {
       return {
         ...state,
         currentOwner: action.owner,
