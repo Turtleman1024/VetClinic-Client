@@ -21,12 +21,12 @@
     "vite-plugin-svgr": "^0.3.0"
   },
   "scripts": {
-    "start": "vite --host",
-    "build": "vite build",
-    "test": "vite test",
-    "eject": "vite eject",
-    "server": "vite preview"
-  },
+  "start": "yarn vite --host",
+  "build": "yarn vite build",
+  "test": "yarn vite test",
+  "eject": "yarn vite eject",
+  "server": "yarn vite preview"
+},
   "eslintConfig": {
     "extends": "react-app"
   },
