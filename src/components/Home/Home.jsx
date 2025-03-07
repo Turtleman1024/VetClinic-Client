@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import ToastifyNotification from '../core/ToastifyNotification';
-import { Container, Table } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { DefaultButton, TextField } from 'office-ui-fabric-react';
-import * as actions from '../../actions/owners';
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import ToastifyNotification from "../core/ToastifyNotification";
+import { Container, Table } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { DefaultButton, TextField } from "office-ui-fabric-react";
+import * as actions from "../../actions/owners";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
   const onBlur = (name, value) => {
@@ -18,10 +18,10 @@ const Home = () => {
 
   const onChange = (name, value) => {
     if (!value || !/\S/.test(value)) {
-      notify('warning', 'Invalid Input', 'Value must be entered!');
+      notify("warning", "Invalid Input", "Value must be entered!");
       setSearchResults([]);
     } else {
-      fetch('https://localhost:44368/api/v1/owner/search-owner/' + value)
+      fetch("https://localhost:44368/api/v1/owner/search-owner/" + value)
         .then((response) => response.json())
         .then((owners) => setSearchResults(owners))
         .catch((err) => console.log(err));
@@ -33,25 +33,47 @@ const Home = () => {
     toast[type](<ToastifyNotification title={title} notificationBody={body} />);
   };
 
+  const [expanded, setExpanded] = useState(false);
+  const [inDOM, setInDOM] = useState(false);
+
+  const handleToggle = () => {
+    if (expanded) {
+      setExpanded(false);
+    } else {
+      setInDOM(true);
+      setTimeout(() => setExpanded(true), 0); // Allow React to process state updates
+    }
+  };
+
+  const handleTransitionEnd = () => {
+    if (!expanded) {
+      setInDOM(false); // Remove from DOM after collapsing
+    }
+  };
+
   return (
     <div>
-      <h1 className='home-title'>Welcome to Home Page</h1>
-      <DefaultButton className="add-owner-btn" href={`/owner/0`} text="Create New Owner" />
+      <h1 className="home-title">Welcome to Home Page</h1>
+      <DefaultButton
+        className="add-owner-btn"
+        href={`/owner/0`}
+        text="Create New Owner"
+      />
       <TextField
-        className='search-owner'
-        name='searchForOwner'
-        type='text'
+        className="search-owner"
+        name="searchForOwner"
+        type="text"
         value={searchValue}
         label="Search for Owner's"
-        placeholder='Search by first name, last name, or phone number '
+        placeholder="Search by first name, last name, or phone number "
         onChange={(e) => onChange(e.target.name, e.target.value)}
         onBlur={(e) => onBlur(e.target.name, e.target.value)}
       />
       {searchResults.length > 0 && (
-        <Container className='p-3 my-3 border'>
-          <Table striped bordered hover variant='light'>
-            <thead style={{ backgroundColor: '#0984e3' }}>
-              <tr style={{ backgroundColor: '#ffffff' }}>
+        <Container className="p-3 my-3 border">
+          <Table striped bordered hover variant="light">
+            <thead style={{ backgroundColor: "#0984e3" }}>
+              <tr style={{ backgroundColor: "#ffffff" }}>
                 <th>Owners</th>
               </tr>
               <tr>
@@ -90,7 +112,7 @@ const Home = () => {
                             }
                           </div>
                         ))
-                      : 'NF'}
+                      : "NF"}
                   </td>
                   <td>{owner.ownerPhone}</td>
                 </tr>
@@ -99,6 +121,27 @@ const Home = () => {
           </Table>
         </Container>
       )}
+      <DefaultButton
+        className="add-owner-btn"
+        text={expanded ? "Close" : "Open"}
+        onClick={handleToggle}
+      />
+      {inDOM && (
+        <div
+          className={`instructions expandable-content ${
+            expanded ? "expanded" : ""
+          }`}
+          onTransitionEnd={handleTransitionEnd}
+        >
+          Hello World!!Hello World!!Hello World!!Hello World!!Hello
+          World!!Hello World! Hello World!!Hello World!!Hello World!!Hello
+          World!!Hello World!!Hello World! Hello World!!Hello World!!Hello
+          World!!Hello World!!Hello World!!Hello World!!Hello World!! Hello
+          World!!Hello World!!
+        </div>
+      )}
+      <div className="instructions" style={{zIndex: -1}}>Blah</div>
+      <div className="instructinos" style={{width: "90vw", height: "1000px"}} />
     </div>
   );
 };

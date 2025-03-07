@@ -39,3 +39,28 @@ div.link {
   background-color: rgb(9, 132, 227);
   margin-top: 12px;
 }
+
+.instructions {
+  /* display: flex;
+  justify-content: flex-start; */
+  /* border: 2px dashed grey; */
+  /* border-radius: 8px; */
+  padding: 8px;
+  z-index: 1000;
+}
+
+.expandable-content {
+  max-height: 0;
+  transition: max-height 0.25s ease-out, margin 0.25s ease-out, opacity 0.25s ease-in;
+  margin: 0 50px;
+  opacity: 0;
+}
+
+.expandable-content.expanded {
+  position: sticky;
+  top: 78px;
+  max-height: 100vh;
+  margin: 12px 50px;
+  opacity: 1;
+  transition: max-height 0.5s ease-in, margin 0.5s ease-in, opacity 0.5s ease-in;
+}

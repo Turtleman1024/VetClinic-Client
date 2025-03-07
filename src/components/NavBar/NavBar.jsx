@@ -15,7 +15,7 @@ class Navbar extends Component {
   render() {
     const show = this.state.menu ? 'show' : '';
     return (
-      <header>
+      <header style={{ position: "sticky", top: "0", zIndex: "100"}}>
         <div className='container-fluid' style={padding}>
           <nav
             className='navbar navbar-dark navbar-expand-lg'
