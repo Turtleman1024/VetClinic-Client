@@ -1,10 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Home from './components/Home/Home';
-import OwnerForm from './components/Forms/Owner';
-import PatientForm from './components/Forms/Patient';
-import OwnerDashboard from './components/Home/OwnerDashboard';
-import PatientDashboard from './components/Home/ActivePatientDashboard';
+import { Home, ActivePatientDashboard, OwnerDashboard } from './components/Dashboards';
+import { Owner, Patient } from './components/Forms';
 import Navbar from './components/NavBar/NavBar';
 import { ToastContainer } from 'react-toastify';
 import { Provider } from 'react-redux';
@@ -36,7 +33,7 @@ const VetClinic = () => {
         <Navbar />
         <Switch>
           <Route path='/' exact strict component={Home} />
-          <Route path='/owner/:ownerId' exact strict component={OwnerForm} />
+          <Route path='/owner/:ownerId' exact strict component={Owner} />
           <Route
             path='/owners-dashboard'
             exact
@@ -47,13 +44,13 @@ const VetClinic = () => {
             path='/owner/:ownerId/patient/:patientId'
             exact
             strict
-            component={PatientForm}
+            component={Patient}
           />
           <Route
             path='/patients-dashboard'
             exact
             strict
-            component={PatientDashboard}
+            component={ActivePatientDashboard}
           />
           <Route component={ErrorPage}></Route>
         </Switch>
