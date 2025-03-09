@@ -1,5 +1,4 @@
 import React from 'react';
-import './VetClinic.css'; //Global css
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './components/Home/Home';
 import OwnerForm from './components/Forms/Owner';
@@ -12,6 +11,8 @@ import { Provider } from 'react-redux';
 import store from './store/store';
 import { initializeIcons } from '@uifabric/icons';
 import { Link } from 'react-router-dom';
+
+import './VetClinic.scss';
 
 const ErrorPage = () => {
   return (

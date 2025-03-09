@@ -17,16 +17,17 @@
     "redux": "^4.0.5",
     "redux-saga": "^1.1.3",
     "redux-thunk": "^2.3.0",
+    "sass": "^1.85.1",
     "vite": "^3.2.2",
     "vite-plugin-svgr": "^0.3.0"
   },
   "scripts": {
-  "start": "yarn vite --host",
-  "build": "yarn vite build",
-  "test": "yarn vite test",
-  "eject": "yarn vite eject",
-  "server": "yarn vite preview"
-},
+    "start": "yarn vite --host",
+    "build": "yarn vite build",
+    "test": "yarn vite test",
+    "eject": "yarn vite eject",
+    "server": "yarn vite preview"
+  },
   "eslintConfig": {
     "extends": "react-app"
   },

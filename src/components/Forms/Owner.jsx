@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { ActionButton, DefaultButton, Label, Stack, Spinner, SpinnerSize, TextField } from 'office-ui-fabric-react';
 import * as actions from '../../actions/owners';
 
-import './forms.css';
+import './forms.scss';
 
 const Owner = () => {
   const { ownerId } = useParams();

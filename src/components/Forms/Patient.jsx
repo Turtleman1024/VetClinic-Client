@@ -5,7 +5,7 @@ import { ActionButton, DefaultButton, Checkbox, Dropdown, DatePicker, Label, Sta
 import * as actions from '../../actions/patients';
 import * as ownerActions from '../../actions/owners';
 
-import './forms.css';
+import './forms.scss';
 
 const Patient = () => {
   const { patientId } = useParams();
